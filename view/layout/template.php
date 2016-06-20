@@ -5,7 +5,7 @@
     <link href="/view/style/bootstrap.min.css" rel="stylesheet"/>
     <link href="/view/style/bootstrap-theme.min.css" rel="stylesheet"/>
     <link href="/view/style/style.css" rel="stylesheet"/>
-    <title>MVC</title>
+    <title>MVC custom</title>
 </head>
 <body>
 <section class="container">
