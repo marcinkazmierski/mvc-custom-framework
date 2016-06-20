@@ -1,7 +1,7 @@
 # mvc-custom-framework
 
 database:
-
+```sql
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` text CHARACTER SET utf8 NOT NULL,
@@ -15,3 +15,4 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `content` varchar(2048) NOT NULL,
   `date` int(11) NOT NULL
 );
+```
