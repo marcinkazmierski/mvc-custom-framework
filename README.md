@@ -1,4 +1,4 @@
-# mvc-custom-framework
+# Simple MVC framework [PHP]
 
 database:
 ```sql
@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `date` int(11) NOT NULL
 );
 ```
+
+
+**what was implemented?**
+- MVC Architecture
+- __autoload
+- namespaces
+- PDO
+- Logs
