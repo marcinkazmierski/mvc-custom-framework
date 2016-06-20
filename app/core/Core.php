@@ -84,7 +84,7 @@ Class Core
         global $baseDir;
         extract(array("content" => $data));
         ob_start();
-        require($baseDir . "/view/$view.php");
+        require($baseDir . "/view/templates/$view.php");
         $content = ob_get_clean();
         return $content;
     }
