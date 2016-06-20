@@ -1,4 +1,5 @@
 <?php
+namespace app\core;
 
 Class Core
 {
@@ -33,7 +34,7 @@ Class Core
 
         try {
             Core::useController($controller, $action, $param);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             print t('Fatal Error: ' . $e->getMessage());
             error_log(t('Fatal Error: ' . $e->getMessage()));
             die();
@@ -50,7 +51,6 @@ Class Core
     {
         $name = str_replace('.', '', (string)$name);
         $name = str_replace('/', '', $name);
-        $name = str_replace('\\', '', $name);
         return $name;
     }
 
@@ -69,11 +69,13 @@ Class Core
         $controller = $controller . "Controller";
         $function = $action . "Action";
 
+        $controller = 'controller\IndexController';
+
         if (class_exists($controller)) {
             $c = new $controller();
             $c->$function($param);
         } else {
-            throw new Exception(t('Controller class not found.'));
+            throw new \Exception(t('Controller class not found.'));
         }
     }
 

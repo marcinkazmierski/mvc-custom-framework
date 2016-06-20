@@ -1,5 +1,5 @@
 <?php
-
+namespace app\config;
 //Config
 class Config
 {
@@ -26,14 +26,14 @@ class Config
     {
         $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::$fileConfig;
         if (!file_exists($file)) {
-            throw new Exception('Create config.ini file!');
+            throw new \Exception('Create config.ini file!');
         }
         try {
             $data = parse_ini_file($file);
             self::$configData = $data;
             return $data;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
     }
 }

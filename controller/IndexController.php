@@ -1,6 +1,10 @@
 <?php
+namespace controller;
 
-//IndexController
+use app\core\Controller;
+use app\core\Core;
+use model\User;
+
 class IndexController extends Controller
 {
 
