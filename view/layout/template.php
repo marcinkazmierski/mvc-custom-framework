@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="/view/style/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/view/style/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link href="/view/style/style.css" rel="stylesheet"/>
-    <title>MVC</title>
+    <link href="/view/assets/style/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/view/assets/style/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="/view/assets/style/style.css" rel="stylesheet"/>
+    <title><?php print t('MVC custom'); ?></title>
 </head>
 <body>
 <section class="container">
@@ -53,8 +53,8 @@
         </section>
     </section>
 </section>
-<script src="/view/js/jquery.min.js"></script>
-<script src="/view/js/bootstrap.min.js"></script>
-<script src="/view/js/main.js"></script>
+<script src="/view/assets/js/jquery.min.js"></script>
+<script src="/view/assets/js/bootstrap.min.js"></script>
+<script src="/view/assets/js/main.js"></script>
 </body>
 </html>

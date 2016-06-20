@@ -1,4 +1,5 @@
 <?php
+namespace app\core;
 
 Class Core
 {
@@ -33,7 +34,7 @@ Class Core
 
         try {
             Core::useController($controller, $action, $param);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             print t('Fatal Error: ' . $e->getMessage());
             error_log(t('Fatal Error: ' . $e->getMessage()));
             die();
@@ -50,7 +51,6 @@ Class Core
     {
         $name = str_replace('.', '', (string)$name);
         $name = str_replace('/', '', $name);
-        $name = str_replace('\\', '', $name);
         return $name;
     }
 
@@ -69,30 +69,30 @@ Class Core
         $controller = $controller . "Controller";
         $function = $action . "Action";
 
+        $controller = 'controller\IndexController';
+
         if (class_exists($controller)) {
             $c = new $controller();
             $c->$function($param);
         } else {
-            throw new Exception(t('Controller class not found.'));
+            throw new \Exception(t('Controller class not found.'));
         }
     }
 
     private static function load($view, $data = null)
     {
-        global $baseDir;
         extract(array("content" => $data));
         ob_start();
-        require($baseDir . "/view/$view.php");
+        require(APP_ROOT . "/view/templates/$view.php");
         $content = ob_get_clean();
         return $content;
     }
 
     public static function loadView($view, $data = null)
     {
-        global $baseDir;
         extract(array("contentAll" => self::load($view, $data)));
         ob_start();
-        require($baseDir . "/view/layout/template.php");
+        require(APP_ROOT . "/view/layout/template.php");
         $content = ob_get_clean();
         return $content;
     }

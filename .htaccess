@@ -1,3 +1,5 @@
-RewriteEngine on
+<IfModule mod_rewrite.c>
+RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php/?([^/]+)/?([^/]*)/?([^/]*)/? /index.php?controller=$1&action=$2&param=$3 [NC]
+</IfModule>

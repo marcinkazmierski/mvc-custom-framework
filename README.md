@@ -1,7 +1,7 @@
-# mvc-custom-framework
+# Simple MVC framework [PHP]
 
 database:
-
+```sql
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` text CHARACTER SET utf8 NOT NULL,
@@ -15,3 +15,12 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `content` varchar(2048) NOT NULL,
   `date` int(11) NOT NULL
 );
+```
+
+
+**what was implemented?**
+- MVC Architecture
+- __autoload
+- namespaces
+- PDO
+- Logs
