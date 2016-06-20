@@ -81,20 +81,18 @@ Class Core
 
     private static function load($view, $data = null)
     {
-        global $baseDir;
         extract(array("content" => $data));
         ob_start();
-        require($baseDir . "/view/templates/$view.php");
+        require(APP_ROOT . "/view/templates/$view.php");
         $content = ob_get_clean();
         return $content;
     }
 
     public static function loadView($view, $data = null)
     {
-        global $baseDir;
         extract(array("contentAll" => self::load($view, $data)));
         ob_start();
-        require($baseDir . "/view/layout/template.php");
+        require(APP_ROOT . "/view/layout/template.php");
         $content = ob_get_clean();
         return $content;
     }

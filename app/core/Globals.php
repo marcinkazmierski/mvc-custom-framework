@@ -13,6 +13,6 @@ function __autoload($class_name)
 
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
     if (file_exists($class)) {
-        require_once str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
+        require_once APP_ROOT . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
     }
 }
