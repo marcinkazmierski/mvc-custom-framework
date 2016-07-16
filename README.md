@@ -15,6 +15,15 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `content` varchar(2048) NOT NULL,
   `date` int(11) NOT NULL
 );
+
+CREATE TABLE `cache` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `cache_key` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci,
+  `expire` int(11) NOT NULL DEFAULT '0'
+);
+
+
 ```
 
 
