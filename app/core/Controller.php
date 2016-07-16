@@ -17,7 +17,7 @@ abstract class Controller implements IController
 
     public function __call($name, $arguments) // if page not found
     {
-        echo t("Strona nie istnieje!");
+        echo t("Page not found");
         die();
     }
 
@@ -25,6 +25,4 @@ abstract class Controller implements IController
     {
         return Core::loadView($viewName, $variables);
     }
-
-
 }
