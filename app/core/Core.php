@@ -69,7 +69,7 @@ Class Core
         $controller = $controller . "Controller";
         $function = $action . "Action";
 
-        $controller = 'controller\IndexController';
+        $controller = 'controller' . '\\' . $controller;
 
         if (class_exists($controller)) {
             $c = new $controller();
