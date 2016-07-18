@@ -23,6 +23,7 @@ abstract class Controller implements IController
 
     public function renderView($viewName, $variables = null)
     {
-        return Core::loadView($viewName, $variables);
+        $body = Core::loadView($viewName, $variables);
+        return new Response($body, 200);
     }
 }
