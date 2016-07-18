@@ -18,8 +18,8 @@ class IndexController extends Controller
     {
         $u = new User();
         $users = $u->getUsers();
-        print $this->renderView("index", $users);
-        $users->closeCursor(); // close PDO
+        return $this->renderView("index", $users);
+        // $users->closeCursor(); // close PDO // TODO
     }
 
     public function userAction($id)
@@ -29,7 +29,7 @@ class IndexController extends Controller
         if ($_SESSION['auth'] == FALSE) {
             Core::redirect("/index.php/index/login");
         }
-        print $this->renderView("user", $user);
+        return $this->renderView("user", $user);
     }
 
     public function loginAction()
@@ -62,7 +62,7 @@ class IndexController extends Controller
     {
         $_SESSION['auth'] = FALSE;
         session_destroy();
-        print $this->renderView("logout");
+        return $this->renderView("logout");
     }
 
     public function insertAction()
@@ -72,7 +72,7 @@ class IndexController extends Controller
             $u->addUser($_POST['login'], $_POST['password']);
             Core::redirect("/index.php/index/login");
         }
-        print $this->renderView("insert");
+        return $this->renderView("insert");
     }
 }
 
