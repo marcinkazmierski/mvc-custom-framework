@@ -1,7 +1,5 @@
 <?php
-namespace model;
-
-use app\core\Database;
+namespace app\core;
 
 class Cache
 {
