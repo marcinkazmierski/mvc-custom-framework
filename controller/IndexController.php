@@ -17,7 +17,14 @@ class IndexController extends Controller
     public function indexAction()
     {
         $u = new User();
-        $users = $u->getUsers();
+        $users = $this->cache->getCache('users');
+        if (!$users) {
+            $users = $u->getUsers();
+            $this->cache->setCache('users', $users, 10);
+        } else {
+            print 'cache było';
+        }
+
         return $this->renderView("index", $users);
         // $users->closeCursor(); // close PDO // TODO
     }

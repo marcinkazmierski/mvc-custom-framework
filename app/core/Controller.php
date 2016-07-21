@@ -4,6 +4,7 @@ namespace app\core;
 abstract class Controller implements IController
 {
     protected static $controller = null;
+    protected $cache = null;
 
     protected function __clone()
     {
@@ -12,7 +13,7 @@ abstract class Controller implements IController
 
     protected function __construct()
     {
-
+        $this->cache = new Cache();
     }
 
     public function __call($name, $arguments) // if page not found
