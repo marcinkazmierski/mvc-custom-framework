@@ -21,8 +21,6 @@ class IndexController extends Controller
         if (!$users) {
             $users = $u->getUsers();
             $this->cache->setCache('users', $users, 10);
-        } else {
-            print 'cache było';
         }
 
         return $this->renderView("index", $users);
