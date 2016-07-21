@@ -5,7 +5,6 @@ use app\config\Config;
 
 class Database implements IDatabase
 {
-
     private static $dataBase = null;
 
     public static function getInstance()

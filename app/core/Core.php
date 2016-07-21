@@ -57,7 +57,7 @@ Class Core
     public static function useController($controller = false, $action = false, $param = false)
     {
         if (!$controller) {
-            $controller = 'index'; //TODO
+            $controller = 'index';
         }
         if (!$action) {
             $action = 'index';
@@ -69,11 +69,11 @@ Class Core
         $controller = $controller . "Controller";
         $function = $action . "Action";
 
-        $controller = 'controller\IndexController';
+        $controller = 'controller' . '\\' . $controller;
 
         if (class_exists($controller)) {
             $c = new $controller();
-            $c->$function($param);
+            call_user_func_array(array($c, $function), array($param));
         } else {
             throw new \Exception(t('Controller class not found.'));
         }
