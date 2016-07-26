@@ -27,6 +27,18 @@ class IndexController extends Controller
         // $users->closeCursor(); // close PDO // TODO
     }
 
+    public function jsonAction()
+    {
+        $u = new User();
+        $users = $this->cache->getCache('users');
+        if (!$users) {
+            $users = $u->getUsers();
+            $this->cache->setCache('users', $users, 10);
+        }
+
+        return $this->renderView("index", $users, 'application/json');
+    }
+
     public function userAction($id)
     {
         $u = new User();
@@ -41,7 +53,7 @@ class IndexController extends Controller
     {
 
         if (!isset($_POST['login']) || !isset($_POST['password']) && $_SESSION['auth'] == FALSE) {
-            print $this->renderView("login");
+            return $this->renderView("login");
         } elseif (isset($_POST['login']) && isset($_POST['password']) && $_SESSION['auth'] == FALSE) {
             if (!empty($_POST['login']) && !empty($_POST['password'])) {
 

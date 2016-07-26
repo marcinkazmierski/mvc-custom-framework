@@ -32,3 +32,10 @@ CREATE TABLE IF NOT EXISTS `caches` (
 - namespaces
 - PDO
 - Logs
+- simple cache engine
+
+**TODO**
+- PHPUnit
+- simple ORM
+- translations
+- environments [dev, prod]
