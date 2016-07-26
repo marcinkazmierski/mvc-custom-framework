@@ -3,9 +3,8 @@ namespace app\core;
 
 class Response implements IResponse
 {
-
     private $_code = 200;
-    public $_content_type = "text/html";
+    public $_content_type;
 
     private function setHeaders()
     {
@@ -13,8 +12,12 @@ class Response implements IResponse
         header("Content-Type:" . $this->_content_type);
     }
 
-    public function __construct($data, $status = 200)
+    public function __construct($data, $status = 200, $content_type = null)
     {
+        if (!$content_type) {
+            $content_type = "text/html";
+        }
+        $this->_content_type = $content_type;
         $this->_code = (int)$status;
         $this->setHeaders();
         print $data;

@@ -22,9 +22,9 @@ abstract class Controller implements IController
         die();
     }
 
-    public function renderView($viewName, $variables = null)
+    public function renderView($viewName, $variables = null, $content_type = null)
     {
         $body = Core::loadView($viewName, $variables);
-        return new Response($body, 200);
+        return new Response($body, 200, $content_type);
     }
 }
