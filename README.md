@@ -39,3 +39,4 @@ CREATE TABLE `cache` (
 - PHPUnit
 - simple ORM
 - translations
+- environments [dev, prod]

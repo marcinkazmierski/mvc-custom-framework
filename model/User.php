@@ -16,7 +16,9 @@ class User
     {
         $sth =  Database::getInstance()->query('SELECT * FROM ' . $this->database_name);
         $sth->execute();
-        return $sth->fetchAll();
+        $results = $sth->fetchAll();
+        $sth->closeCursor();
+        return $results;
     }
 
     function getUser($id)
