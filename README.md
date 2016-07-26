@@ -33,3 +33,9 @@ CREATE TABLE `cache` (
 - namespaces
 - PDO
 - Logs
+- simple cache engine
+
+**TODO**
+- PHPUnit
+- simple ORM
+- translations
