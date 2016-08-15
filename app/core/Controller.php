@@ -11,7 +11,7 @@ abstract class Controller implements IController
 
     }
 
-    protected function __construct()
+    public function __construct()
     {
         $this->cache = new Cache();
     }

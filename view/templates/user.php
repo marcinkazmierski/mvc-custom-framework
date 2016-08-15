@@ -1,8 +1,7 @@
 <article>
     <header><h2>User:</h2></header>
     <section>
-        <p>id: <?php echo $content[0]; ?></p>
-
-        <p>login: <?php echo $content[1]; ?></p>
+        <p>id: <?php print $content->id; ?></p>
+        <p>login: <?php print $content->login; ?></p>
     </section>
 </article>

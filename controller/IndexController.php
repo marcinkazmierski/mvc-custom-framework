@@ -13,7 +13,6 @@ class IndexController extends Controller
         parent::__construct();
     }
 
-
     public function indexAction()
     {
         $u = new UserModel();
@@ -22,7 +21,6 @@ class IndexController extends Controller
             $users = $u->getAll();
             $this->cache->setCache('users', $users, 10);
         }
-
         return $this->renderView("index", $users);
     }
 
@@ -34,7 +32,7 @@ class IndexController extends Controller
             $users = $u->getAll();
             $this->cache->setCache('users', $users, 10);
         }
-        
+
         $usersJson = json_encode($users);
         return $this->renderView("json", $usersJson, 'application/json', true);
     }
