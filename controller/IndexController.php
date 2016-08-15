@@ -84,7 +84,7 @@ class IndexController extends Controller
     {
         if (isset($_POST['login']) && isset($_POST['password'])) {
             $u = new UserModel();
-            $u->addUser($_POST['login'], $_POST['password']);
+            $id = $u->addUser($_POST['login'], $_POST['password']);
             Core::redirect("/index.php/index/login");
         }
         return $this->renderView("insert");

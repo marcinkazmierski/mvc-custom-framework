@@ -33,8 +33,16 @@ abstract class Orm implements IOrm
     {
         $sth = $this->databaseInstance->prepare($sql);
         $sth->execute($params);
-        $results = $sth->fetchAll(\PDO::FETCH_OBJ);
+        $results = null;
+        if ($sth->columnCount()) {
+            $results = $sth->fetchAll(\PDO::FETCH_OBJ);
+        }
         $sth->closeCursor();
         return $results;
+    }
+
+    protected function lastInsertId()
+    {
+        return (int)$this->databaseInstance->lastInsertId();
     }
 }
