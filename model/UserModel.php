@@ -13,20 +13,6 @@ class UserModel extends Orm
         parent::__construct($this->tableName);
     }
 
-    function getUsers()
-    {
-        $sth =  Database::getInstance()->query('SELECT * FROM ' . $this->tableName);
-        $sth->execute();
-        $results = $sth->fetchAll();
-        $sth->closeCursor();
-        return $results;
-    }
-
-    function getUser($id)
-    {
-        return Database::getInstance()->query('SELECT * FROM ' . $this->tableName . ' WHERE id=' . (int)$id);
-    }
-
     function authUser($login, $password)
     {
         $login = htmlspecialchars($login);
