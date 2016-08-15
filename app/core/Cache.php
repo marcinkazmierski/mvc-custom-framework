@@ -1,16 +1,25 @@
 <?php
 namespace app\core;
 
-class Cache
+class Cache extends Orm
 {
-    private $database_name = "caches";
+    private $tableName = "caches";
+
+    function __construct()
+    {
+        parent::__construct($this->tableName);
+    }
 
     public function getCache($cache_key)
     {
-        $result = Database::getInstance()->prepare('SELECT * FROM ' . $this->database_name . ' WHERE cache_key=:cache_key;');
-        $result->execute(array(':cache_key' => $cache_key));
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE cache_key=:cache_key;';
+        $params = array(':cache_key' => $cache_key);
+        $results = $this->execute($sql, $params);
+        $cache = false;
+        if (!empty($results) && is_array($results)) {
+            $cache = array_pop($results);
+        }
 
-        $cache = $result->fetchObject();
         if ($cache && isset($cache->value)) {
             $now = strtotime('now');
             if ($cache->expire > 0) {
@@ -33,30 +42,27 @@ class Cache
             $expire = 0;
         }
         $this->dropByKey($cache_key);
-        $result = Database::getInstance()->prepare('INSERT INTO ' . $this->database_name . ' (cache_key, `value`, expire) VALUES (:cache_key, :cache_value, :expire);');
-        $result->execute(
-            array(
-                ':cache_key' => $cache_key,
-                ':cache_value' => serialize($value),
-                ':expire' => $expire,
-            )
+
+        $sql = 'INSERT INTO ' . $this->tableName . ' (cache_key, `value`, expire) VALUES (:cache_key, :cache_value, :expire);';
+        $params = array(
+            ':cache_key' => $cache_key,
+            ':cache_value' => serialize($value),
+            ':expire' => $expire,
         );
-        return $result->rowCount();
+        return $this->execute($sql, $params);
     }
 
     public function dropAllCache()
     {
-        return Database::getInstance()->query('DELETE FROM ' . $this->database_name . ' WHERE 1;');
+        $sql = 'DELETE FROM ' . $this->tableName . ' WHERE 1;';
+        return $this->execute($sql);
     }
 
     protected function dropByKey($cache_key)
     {
-        $result = Database::getInstance()->prepare('DELETE FROM ' . $this->database_name . ' WHERE cache_key = :cache_key;');
-        $result->execute(
-            array(
-                ':cache_key' => $cache_key,
-            )
-        );
+        $sql = 'DELETE FROM ' . $this->tableName . ' WHERE cache_key = :cache_key;';
+        $params = array(':cache_key' => $cache_key);
+        return $this->execute($sql, $params);
     }
 }
 
