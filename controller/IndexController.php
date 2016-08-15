@@ -31,17 +31,18 @@ class IndexController extends Controller
         $u = new UserModel();
         $users = $this->cache->getCache('users');
         if (!$users) {
-            $users = $u->getUsers();
+            $users = $u->getAll();
             $this->cache->setCache('users', $users, 10);
         }
-
-        return $this->renderView("index", $users, 'application/json');
+        
+        $usersJson = json_encode($users);
+        return $this->renderView("json", $usersJson, 'application/json', true);
     }
 
     public function userAction($id)
     {
         $u = new UserModel();
-        $user = $u->getUser((int)$id)->fetch();
+        $user = $u->getById($id);
         if ($_SESSION['auth'] == FALSE) {
             Core::redirect("/index.php/index/login");
         }
