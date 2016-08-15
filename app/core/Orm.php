@@ -3,32 +3,46 @@ namespace app\core;
 
 abstract class Orm implements IOrm
 {
-    protected $databaseName;
+    private $tableName;
+    protected $databaseInstance;
 
-    public function __construct($databaseName)
+    public function __construct($tableName)
     {
-        $this->databaseName = $databaseName;
+        $this->tableName = $tableName;
+        $this->databaseInstance = Database::getInstance();
     }
 
     public function getAll()
     {
-        $sth = Database::getInstance()->query('SELECT * FROM ' . $this->databaseName);
-        $results = $sth->fetchAll();
-        $sth->closeCursor();
+        $results = $this->execute('SELECT * FROM ' . $this->tableName);
         return $results;
     }
 
     public function getById($id)
     {
-        $sth = Database::getInstance()->prepare('SELECT * FROM ' . $this->databaseName . ' WHERE id=:id;');
-        $sth->execute(array(':id' => (int)$id));
-        $results = $sth->fetch();
-        $sth->closeCursor();
-        return $results;
+        $params = array(':id' => (int)$id);
+
+        $results = $this->execute('SELECT * FROM ' . $this->tableName . ' WHERE id=:id;', $params);
+        if (!empty($results) && is_array($results)) {
+            return array_pop($results);
+        }
+        return null;
     }
 
     public function execute($sql, array $params = array())
     {
-        // TODO: Implement execute() method.
+        $sth = $this->databaseInstance->prepare($sql);
+        $sth->execute($params);
+        $results = null;
+        if ($sth->columnCount()) {
+            $results = $sth->fetchAll(\PDO::FETCH_OBJ);
+        }
+        $sth->closeCursor();
+        return $results;
+    }
+
+    protected function lastInsertId()
+    {
+        return (int)$this->databaseInstance->lastInsertId();
     }
 }

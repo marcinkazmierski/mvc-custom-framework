@@ -39,3 +39,5 @@ CREATE TABLE IF NOT EXISTS `caches` (
 - simple ORM
 - translations
 - environments [dev, prod]
+- simple debugger
+- flash messages

@@ -88,8 +88,11 @@ Class Core
         return $content;
     }
 
-    public static function loadView($view, $data = null)
+    public static function loadView($view, $data = null, $returnOnlyContent = false)
     {
+        if ($returnOnlyContent) {
+            return self::load($view, $data);
+        }
         extract(array("contentAll" => self::load($view, $data)));
         ob_start();
         require(APP_ROOT . "/view/layout/template.php");

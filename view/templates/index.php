@@ -1,12 +1,10 @@
 <section>
     <h2>
-        <?php
-        if (!empty($_SESSION['auth']) && $_SESSION['auth'] == TRUE) {
-            echo 'You are logged in';
-        } else {
-            echo '<b>You are not logged in</b>';
-        }
-        ?>
+        <?php if (isset($content['auth']) && $content['auth'] === true): ?>
+            You are logged
+        <?php else: ?>
+            You are not logged
+        <?php endif; ?>
     </h2>
 </section>
 
@@ -14,8 +12,8 @@
 <div class="users">
     <?php
     echo '<ul>';
-    foreach ($content as $row) {
-        echo '<li>' . $row['id'] . ': ' . $row['login'] . '</li>';
+    foreach ($content['users'] as $user) {
+        echo '<li>' . $user->id . ': ' . $user->login . '</li>';
     }
     echo '</ul>';
     ?>
