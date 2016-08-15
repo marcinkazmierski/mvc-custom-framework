@@ -14,8 +14,8 @@
 <div class="users">
     <?php
     echo '<ul>';
-    foreach ($content as $row) {
-        echo '<li>' . $row['id'] . ': ' . $row['login'] . '</li>';
+    foreach ($content as $user) {
+        echo '<li>' . $user->id . ': ' . $user->login . '</li>';
     }
     echo '</ul>';
     ?>

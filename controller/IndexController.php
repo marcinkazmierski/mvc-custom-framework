@@ -3,7 +3,7 @@ namespace controller;
 
 use app\core\Controller;
 use app\core\Core;
-use model\User;
+use model\UserModel;
 
 class IndexController extends Controller
 {
@@ -16,20 +16,19 @@ class IndexController extends Controller
 
     public function indexAction()
     {
-        $u = new User();
+        $u = new UserModel();
         $users = $this->cache->getCache('users');
         if (!$users) {
-            $users = $u->getUsers();
+            $users = $u->getAll();
             $this->cache->setCache('users', $users, 10);
         }
 
         return $this->renderView("index", $users);
-        // $users->closeCursor(); // close PDO // TODO
     }
 
     public function jsonAction()
     {
-        $u = new User();
+        $u = new UserModel();
         $users = $this->cache->getCache('users');
         if (!$users) {
             $users = $u->getUsers();
@@ -41,7 +40,7 @@ class IndexController extends Controller
 
     public function userAction($id)
     {
-        $u = new User();
+        $u = new UserModel();
         $user = $u->getUser((int)$id)->fetch();
         if ($_SESSION['auth'] == FALSE) {
             Core::redirect("/index.php/index/login");
@@ -57,7 +56,7 @@ class IndexController extends Controller
         } elseif (isset($_POST['login']) && isset($_POST['password']) && $_SESSION['auth'] == FALSE) {
             if (!empty($_POST['login']) && !empty($_POST['password'])) {
 
-                $u = new User();
+                $u = new UserModel();
                 $sql = $u->authUser($_POST['login'], $_POST['password']);
                 if ((int)$sql > 0) {
                     $_SESSION['user'] = $_POST['login'];
@@ -85,7 +84,7 @@ class IndexController extends Controller
     public function insertAction()
     {
         if (isset($_POST['login']) && isset($_POST['password'])) {
-            $u = new User();
+            $u = new UserModel();
             $u->addUser($_POST['login'], $_POST['password']);
             Core::redirect("/index.php/index/login");
         }

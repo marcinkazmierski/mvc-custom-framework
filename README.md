@@ -40,3 +40,4 @@ CREATE TABLE `cache` (
 - simple ORM
 - translations
 - environments [dev, prod]
+- simple debugger
