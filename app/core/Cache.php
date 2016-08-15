@@ -58,7 +58,7 @@ class Cache extends Orm
         return $this->execute($sql);
     }
 
-    protected function dropByKey($cache_key)
+    public function dropByKey($cache_key)
     {
         $sql = 'DELETE FROM ' . $this->tableName . ' WHERE cache_key = :cache_key;';
         $params = array(':cache_key' => $cache_key);

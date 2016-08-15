@@ -84,6 +84,7 @@ class IndexController extends Controller
         if (isset($_POST['login']) && isset($_POST['password'])) {
             $u = new UserModel();
             $id = $u->addUser($_POST['login'], $_POST['password']);
+            $this->cache->dropByKey('users');
             Core::redirect("/index.php/index/login");
         }
         return $this->renderView("insert");
