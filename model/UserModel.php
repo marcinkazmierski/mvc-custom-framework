@@ -13,21 +13,14 @@ class UserModel extends Orm
         parent::__construct($this->tableName);
     }
 
-    function authUser($login, $password)
+    public function getUserByLoginPassword($login, $password)
     {
         $login = htmlspecialchars($login);
         $password = md5($password);
-        $result = Database::getInstance()->prepare('SELECT * FROM ' . $this->tableName . ' WHERE login=:login AND password="' . $password . '";');
-        $result->execute(array(':login' => $login));
-        return $result->fetchColumn(0); // return ID
-    }
-
-    public function getUserByLogin($login)
-    {
-        $login = htmlspecialchars($login);
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login=:login;';
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login=:login AND password=:password;';
         $params = array(
             ':login' => $login,
+            ':password' => $password
         );
         $results = $this->execute($sql, $params);
         if (!empty($results) && is_array($results)) {

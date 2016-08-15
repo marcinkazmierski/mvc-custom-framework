@@ -21,7 +21,11 @@ class IndexController extends Controller
             $users = $u->getAll();
             $this->cache->setCache('users', $users, 10);
         }
-        return $this->renderView("index", $users);
+        $params = array(
+            'users' => $users,
+            'auth' => $this->isAuth()
+        );
+        return $this->renderView("index", $params);
     }
 
     public function jsonAction()
@@ -41,7 +45,7 @@ class IndexController extends Controller
     {
         $u = new UserModel();
         $user = $u->getById($id);
-        if ($_SESSION['auth'] == FALSE) {
+        if (!$this->isAuth()) {
             Core::redirect("/index.php/index/login");
         }
         return $this->renderView("user", $user);
@@ -49,39 +53,34 @@ class IndexController extends Controller
 
     public function loginAction()
     {
-
-        if (!isset($_POST['login']) || !isset($_POST['password']) && $_SESSION['auth'] == FALSE) {
-            return $this->renderView("login");
-        } elseif (isset($_POST['login']) && isset($_POST['password']) && $_SESSION['auth'] == FALSE) {
-            if (!empty($_POST['login']) && !empty($_POST['password'])) {
-
-                $u = new UserModel();
-                $sql = $u->authUser($_POST['login'], $_POST['password']);
-                if ((int)$sql > 0) {
-                    $_SESSION['user'] = $_POST['login'];
-                    $_SESSION['auth'] = TRUE;
-                    Core::redirect("/index.php/index/index");
-                }
-            }
+        if ($this->isAuth()) {
+            Core::redirect("/index.php/index/index");
         }
 
-        if (!empty($_SESSION['auth']) && $_SESSION['auth'] == TRUE) {
-            Core::redirect("/index.php/index/index");
-        } else
-            if ($_POST) {
-                Core::redirect("/index.php/index/login");
+        if (!empty($_POST['login']) && !empty($_POST['password'])) {
+            $u = new UserModel();
+            $user = $u->getUserByLoginPassword($_POST['login'], $_POST['password']);
+
+            if ($user) {
+                $this->setAuth($user->login);
+                Core::redirect("/index.php/index/index");
             }
+        }
+        return $this->renderView("login");
     }
 
     public function logoutAction()
     {
-        $_SESSION['auth'] = FALSE;
-        session_destroy();
+        $this->destroyAuth();
         return $this->renderView("logout");
     }
 
     public function insertAction()
     {
+        if (!$this->isAuth()) {
+            Core::redirect("/index.php/index/login");
+        }
+
         if (isset($_POST['login']) && isset($_POST['password'])) {
             $u = new UserModel();
             $id = $u->addUser($_POST['login'], $_POST['password']);

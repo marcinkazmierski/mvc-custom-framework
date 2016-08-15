@@ -41,3 +41,4 @@ CREATE TABLE `cache` (
 - translations
 - environments [dev, prod]
 - simple debugger
+- flash messages
