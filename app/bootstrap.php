@@ -1,6 +1,6 @@
 <?php
 /**
- * Bootstrap.
+ * Bootstrap engine.
  */
 
 if (!session_id()) {
