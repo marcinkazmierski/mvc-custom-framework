@@ -5,9 +5,8 @@ class Auth
 {
     private static $instance = null;
 
-    private function __construct()
+    private function __construct() // private
     {
-        // private
     }
 
     public static function getInstance()
@@ -36,6 +35,6 @@ class Auth
     public function destroyAuth()
     {
         $_SESSION['auth_authenticated'] = array();
-        session_destroy();
+        @session_destroy();
     }
 }

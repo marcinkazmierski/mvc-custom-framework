@@ -34,10 +34,13 @@ CREATE TABLE IF NOT EXISTS `caches` (
 - Logs
 - simple cache engine
 - simple ORM
+- PHPUnit
 
 **TODO**
-- PHPUnit
 - translations
 - environments [dev, prod]
-- simple debugger
 - flash messages
+
+
+**PHPUnit**
+- Tests run: php phpunit.phar app\tests\
