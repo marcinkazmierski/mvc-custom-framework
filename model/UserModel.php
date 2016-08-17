@@ -1,7 +1,6 @@
 <?php
 namespace model;
 
-use app\core\Database;
 use app\core\Orm;
 
 class UserModel extends Orm
