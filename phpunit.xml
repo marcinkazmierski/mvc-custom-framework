@@ -27,6 +27,7 @@
             <directory>app</directory>
             <exclude>
                 <directory>app/tests</directory>
+                <file>app/bootstrap.php</file>
             </exclude>
         </whitelist>
     </filter>
