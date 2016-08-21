@@ -45,3 +45,4 @@ CREATE TABLE `cache` (
 
 **PHPUnit**
 - Tests run: php phpunit.phar app\tests\
+- Tests results: /build/coverage/
