@@ -23,7 +23,6 @@ abstract class Controller implements IController
     public function __call($name, $arguments) // if page not found
     {
         echo t("Page not found");
-        die();
     }
 
     public function renderView($viewName, $variables = null, $content_type = null, $returnOnlyContent = false)

@@ -1,3 +1,17 @@
-body{
+body {
 
+}
+
+.profiler-wrapper {
+    position: fixed;
+    width: 100%;
+    padding: 10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #67b168;
+}
+
+.profiler-wrapper p {
+    margin: 0;
 }

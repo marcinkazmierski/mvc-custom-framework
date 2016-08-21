@@ -23,7 +23,6 @@ class Response implements IResponse
         $this->_code = (int)$status;
         $this->setHeaders();
         print $data;
-        exit;
     }
 
     private function getStatusMessage()
