@@ -14,9 +14,9 @@ abstract class Orm implements IOrm
         $this->databaseInstance = Database::getInstance();
     }
 
-    public function getAll()
+    public function getAll($limit = 20)
     {
-        $results = $this->execute('SELECT * FROM ' . $this->tableName);
+        $results = $this->execute('SELECT * FROM ' . $this->tableName . ' LIMIT ' . $limit);
         return $results;
     }
 

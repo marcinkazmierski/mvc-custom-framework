@@ -40,6 +40,16 @@ class UserModel extends Orm
         $this->execute($sql, $params);
         return $this->lastInsertId();
     }
+
+    function findLikeLogin($text)
+    {
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login LIKE :text LIMIT 30;';
+        $params = array(
+            ':text' => '%' . $text . '%',
+    );
+        $results = $this->execute($sql, $params);
+        return $results;
+    }
 }
 
 

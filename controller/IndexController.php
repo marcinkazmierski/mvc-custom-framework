@@ -17,6 +17,7 @@ class IndexController extends Controller
     {
         $u = new UserModel();
         $users = $this->cache->getCache('users');
+
         if (!$users) {
             $users = $u->getAll();
             $this->cache->setCache('users', $users, 10);

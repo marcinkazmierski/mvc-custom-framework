@@ -3,7 +3,7 @@ namespace app\core\interfaces;
 
 interface IOrm
 {
-    public function getAll();
+    public function getAll($limit);
 
     public function getById($id);
 
