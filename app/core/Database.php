@@ -2,6 +2,7 @@
 namespace app\core;
 
 use app\config\Config;
+use app\core\interfaces\IDatabase;
 
 class Database implements IDatabase
 {

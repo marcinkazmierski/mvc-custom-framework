@@ -1,6 +1,8 @@
 <?php
 namespace app\core;
 
+use app\core\interfaces\IController;
+
 abstract class Controller implements IController
 {
     protected static $controller = null;

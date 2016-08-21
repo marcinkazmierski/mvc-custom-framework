@@ -1,6 +1,8 @@
 <?php
 namespace app\core;
 
+use app\core\interfaces\IOrm;
+
 abstract class Orm implements IOrm
 {
     private $tableName;
