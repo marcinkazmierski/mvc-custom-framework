@@ -10,10 +10,14 @@ Class Core
 
     public static function init()
     {
+        Profiler::getInstance()->start('Core:init');
         ini_set("log_errors", 1);
         ini_set('display_errors', 1); // debug
         ini_set("error_log", "logs/errors.log");
         self::startDispatcher();
+        Profiler::getInstance()->end('Core:init');
+
+        print Profiler::getInstance()->getAllStats();
     }
 
     private static function startDispatcher()
@@ -37,7 +41,6 @@ Class Core
         } catch (\Exception $e) {
             print t('Fatal Error: ' . $e->getMessage());
             error_log(t('Fatal Error: ' . $e->getMessage()));
-            die();
         }
     }
 

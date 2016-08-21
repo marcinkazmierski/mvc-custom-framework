@@ -1,6 +1,8 @@
 <?php
 namespace app\core;
 
+use app\core\interfaces\IResponse;
+
 class Response implements IResponse
 {
     private $_code = 200;
@@ -21,7 +23,6 @@ class Response implements IResponse
         $this->_code = (int)$status;
         $this->setHeaders();
         print $data;
-        exit;
     }
 
     private function getStatusMessage()

@@ -2,6 +2,7 @@
 namespace app\core;
 
 use app\config\Config;
+use app\core\interfaces\IDatabase;
 
 class Database implements IDatabase
 {
@@ -18,7 +19,6 @@ class Database implements IDatabase
                 self::$dataBase->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException $e) {
                 print "Database error: " . $e->getMessage() . "<br/>";
-                die();
             }
         }
         return self::$dataBase;

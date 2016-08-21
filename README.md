@@ -44,3 +44,4 @@ CREATE TABLE IF NOT EXISTS `caches` (
 
 **PHPUnit**
 - Tests run: php phpunit.phar app\tests\
+- Tests results: /build/coverage/
