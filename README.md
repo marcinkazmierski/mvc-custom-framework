@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 );
 
 CREATE TABLE `cache` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `cache_key` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `value` text COLLATE utf8_unicode_ci,
   `expire` int(11) NOT NULL DEFAULT '0'
