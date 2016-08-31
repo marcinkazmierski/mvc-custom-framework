@@ -8,7 +8,7 @@ abstract class Controller implements IController
     protected static $controller = null;
     protected $cache = null;
     protected $auth = null;
-    
+
     public function __construct()
     {
         $this->cache = new Cache();

@@ -1,11 +1,10 @@
 <?php
 namespace app\core;
 
-Class Core
+class Core
 {
     private function __construct()
     {
-
     }
 
     public static function init()
