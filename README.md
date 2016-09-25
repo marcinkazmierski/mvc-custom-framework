@@ -25,8 +25,7 @@ CREATE TABLE `caches` (
 );
 ```
 
-
-### What was implemented? 
+### What implemented? 
 - MVC Architecture
 - __autoload
 - namespaces
@@ -40,7 +39,6 @@ CREATE TABLE `caches` (
 
 ### TODO 
 - translations
-
 
 ###PHPUnit
 - Tests run: php phpunit.phar app\tests\
