@@ -46,7 +46,7 @@ class UserModel extends Orm
         $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login LIKE :text LIMIT 30;';
         $params = array(
             ':text' => '%' . $text . '%',
-    );
+        );
         $results = $this->execute($sql, $params);
         return $results;
     }

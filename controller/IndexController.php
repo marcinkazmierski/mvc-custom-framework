@@ -64,8 +64,10 @@ class IndexController extends Controller
 
             if ($user) {
                 $this->setAuth($user->login);
+                set_flash_message(t('Success login'));
                 Core::redirect("/index.php/index/index");
             }
+            set_flash_message(t('Invalid login data'));
         }
         return $this->renderView("login");
     }

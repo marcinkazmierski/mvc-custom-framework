@@ -1,17 +1,23 @@
 <?php
 namespace app\core;
 
+use app\config\Config;
 use app\core\interfaces\IOrm;
 
 abstract class Orm implements IOrm
 {
     private $tableName;
     protected $databaseInstance;
+    protected $environment;
 
     public function __construct($tableName)
     {
         $this->tableName = $tableName;
         $this->databaseInstance = Database::getInstance();
+        $this->environment = Config::getOption('environment');
+        if (empty($this->environment)) {
+            $this->environment = 'prod';
+        }
     }
 
     public function getAll($limit = 20)

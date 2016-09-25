@@ -1,6 +1,6 @@
 # Simple MVC framework [PHP]
 
-database:
+### database:
 ```sql
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -23,11 +23,10 @@ CREATE TABLE `caches` (
   `expire` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 );
-
 ```
 
 
-**what was implemented?**
+### What was implemented? 
 - MVC Architecture
 - __autoload
 - namespaces
@@ -36,13 +35,13 @@ CREATE TABLE `caches` (
 - simple cache engine
 - simple ORM
 - PHPUnit
-
-**TODO**
-- translations
 - environments [dev, prod]
 - flash messages
 
+### TODO 
+- translations
 
-**PHPUnit**
+
+###PHPUnit
 - Tests run: php phpunit.phar app\tests\
 - Tests results: /build/coverage/
