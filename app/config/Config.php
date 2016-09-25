@@ -26,7 +26,7 @@ class Config
     {
         $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::$fileConfig;
         if (!file_exists($file)) {
-            throw new \Exception('Create config.ini file!');
+            throw new \Exception('Create config.ini file - copy form config.ini.sample!');
         }
         try {
             $data = parse_ini_file($file);

@@ -12,7 +12,7 @@ class Cache extends Orm
 
     protected function isDevEnvironment()
     {
-        if ($this->environment !== 'prod') {
+        if ($this->environment === 'dev') {
             return true;
         }
         return false;
