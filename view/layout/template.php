@@ -45,6 +45,11 @@
                 </section>
             </nav>
             <section class="container">
+                <div class="row">
+                    <section>
+                        <?php print get_all_flash_messages(); ?>
+                    </section>
+                </div>
                 <section class="row">
                     <?php
                     echo $contentAll;

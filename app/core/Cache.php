@@ -23,7 +23,7 @@ class Cache extends Orm
         if ($this->isDevEnvironment()) {
             return false; // dev environment
         }
-        
+
         $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE cache_key=:cache_key;';
         $params = array(':cache_key' => $cache_key);
         $results = $this->execute($sql, $params);
