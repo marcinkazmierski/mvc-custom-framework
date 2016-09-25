@@ -25,7 +25,7 @@ CREATE TABLE `caches` (
 );
 ```
 
-### What was implemented? 
+### What implemented? 
 - MVC Architecture
 - __autoload
 - namespaces
