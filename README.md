@@ -41,8 +41,6 @@ CREATE TABLE `caches` (
 ### TODO 
 - translations
 - PHP7
-- 404 template
-- 500 template 
 
 ###PHPUnit
 - Tests run: php phpunit.phar app\tests\
