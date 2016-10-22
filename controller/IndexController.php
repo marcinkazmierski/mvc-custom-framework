@@ -3,6 +3,7 @@ namespace controller;
 
 use app\core\Controller;
 use app\core\Core;
+use app\core\exception\AccessDeniedException;
 use model\UserModel;
 
 class IndexController extends Controller
@@ -81,14 +82,14 @@ class IndexController extends Controller
     public function insertAction()
     {
         if (!$this->isAuth()) {
-            Core::redirect("/index.php/index/login");
+            throw new AccessDeniedException();
         }
 
         if (isset($_POST['login']) && isset($_POST['password'])) {
             $u = new UserModel();
             $id = $u->addUser($_POST['login'], $_POST['password']);
             $this->cache->dropByKey('users');
-            Core::redirect("/index.php/index/login");
+            Core::redirect("/index.php/index/index");
         }
         return $this->renderView("insert");
     }

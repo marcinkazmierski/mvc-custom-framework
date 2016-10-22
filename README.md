@@ -1,5 +1,7 @@
 # Simple MVC framework [PHP]
 
+## Version v1.0.1
+
 ### database:
 ```sql
 CREATE TABLE IF NOT EXISTS `users` (
@@ -36,9 +38,11 @@ CREATE TABLE `caches` (
 - PHPUnit
 - environments [dev, prod]
 - flash messages
+- Exceptions
 
 ### TODO 
 - translations
+- PHP7
 
 ###PHPUnit
 - Tests run: php phpunit.phar app\tests\
