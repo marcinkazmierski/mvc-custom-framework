@@ -1,6 +1,7 @@
 <?php
 namespace app\core;
 
+use app\core\exception\NotFoundException;
 use app\core\interfaces\IController;
 
 abstract class Controller implements IController
@@ -17,13 +18,13 @@ abstract class Controller implements IController
 
     public function __call($name, $arguments) // if page not found
     {
-        echo t("Page not found");
+        throw new NotFoundException();
     }
 
-    public function renderView($viewName, $variables = null, $content_type = null, $returnOnlyContent = false)
+    public function renderView($viewName, $variables = null, $content_type = null, $returnOnlyContent = false, $status = 200)
     {
         $body = Core::loadView($viewName, $variables, $returnOnlyContent);
-        return new Response($body, 200, $content_type);
+        return new Response($body, $status, $content_type);
     }
 
     public function isAuth()

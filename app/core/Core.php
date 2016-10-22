@@ -1,6 +1,8 @@
 <?php
 namespace app\core;
 
+use app\core\exception\ExceptionController;
+
 class Core
 {
     private function __construct()
@@ -74,8 +76,13 @@ class Core
         $controller = 'controller' . '\\' . $controller;
 
         if (class_exists($controller)) {
+        try{
             $c = new $controller();
             call_user_func_array(array($c, $function), array($param));
+        }catch (\Exception $e){
+            $exception = new ExceptionController();
+            $exception->render($e);
+        }
         } else {
             throw new \Exception(t('Controller class not found.'));
         }
