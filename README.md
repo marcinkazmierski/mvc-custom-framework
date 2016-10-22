@@ -1,5 +1,7 @@
 # Simple MVC framework [PHP]
 
+## Version v1.0.1
+
 ### database:
 ```sql
 CREATE TABLE IF NOT EXISTS `users` (
