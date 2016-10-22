@@ -12,8 +12,8 @@ class Core
     public static function init()
     {
         Profiler::getInstance()->start('Core:init');
-        ini_set("log_errors", 1);
-        ini_set('display_errors', 1); // debug
+        ini_set("log_errors", Profiler::getInstance()->isEnabled());
+        ini_set('display_errors', Profiler::getInstance()->isEnabled());
         ini_set("error_log", "logs/errors.log");
         self::startDispatcher();
         Profiler::getInstance()->end('Core:init');
@@ -40,7 +40,8 @@ class Core
         try {
             Core::useController($controller, $action, $param);
         } catch (\Exception $e) {
-            print t('Fatal Error: ' . $e->getMessage());
+            $exception = new ExceptionController();
+            $exception->render($e);
             error_log(t('Fatal Error: ' . $e->getMessage()));
         }
     }
@@ -76,13 +77,8 @@ class Core
         $controller = 'controller' . '\\' . $controller;
 
         if (class_exists($controller)) {
-        try{
             $c = new $controller();
             call_user_func_array(array($c, $function), array($param));
-        }catch (\Exception $e){
-            $exception = new ExceptionController();
-            $exception->render($e);
-        }
         } else {
             throw new \Exception(t('Controller class not found.'));
         }

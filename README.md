@@ -36,10 +36,10 @@ CREATE TABLE `caches` (
 - PHPUnit
 - environments [dev, prod]
 - flash messages
+- Exceptions
 
 ### TODO 
 - translations
-- Exceptions
 - PHP7
 - 404 template
 - 500 template 

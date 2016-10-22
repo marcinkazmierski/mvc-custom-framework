@@ -28,7 +28,7 @@ class Profiler implements IProfiler
         return self::$instance;
     }
 
-    protected function isEnabled()
+    public function isEnabled()
     {
         if ($this->environment !== 'prod') {
             return true;
