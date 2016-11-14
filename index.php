@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
 define('APP_ROOT', getcwd());
-require_once APP_ROOT . '/app/bootstrap.php';
+require_once APP_ROOT . '/framework/bootstrap.php';
 
-\app\core\Core::init(); // init function
+\Core\Core::init(); // init function

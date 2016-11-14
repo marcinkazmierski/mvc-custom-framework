@@ -25,7 +25,10 @@ CREATE TABLE `caches` (
   `expire` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 );
+
+INSERT INTO `users` (`id`, `login`, `password`) VALUES (NULL, 'test', '098f6bcd4621d373cade4e832627b4f6');
 ```
+User: test / test
 
 ### What implemented? 
 - MVC Architecture
