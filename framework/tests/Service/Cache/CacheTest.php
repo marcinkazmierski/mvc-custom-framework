@@ -1,8 +1,8 @@
 <?php
-namespace app\tests\core;
+namespace Tests\Service\Cache;
 
-use app\core\Cache;
 use PHPUnit\Framework\TestCase;
+use Service\Cache\Cache;
 
 class CacheTest extends TestCase
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace app\tests\core;
+namespace Tests\Exception;
 
-
-use app\core\exception\ExceptionController;
+use Exception\ExceptionController;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionControllerTest extends TestCase

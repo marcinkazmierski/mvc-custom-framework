@@ -48,5 +48,5 @@ User: test / test
 - PHP7
 
 ###PHPUnit
-- Tests run: php phpunit.phar app\tests\
+- Tests run: php phpunit.phar framework/tests/
 - Tests results: /build/coverage/

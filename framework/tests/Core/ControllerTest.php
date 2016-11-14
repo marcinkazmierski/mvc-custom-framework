@@ -1,8 +1,8 @@
 <?php
-namespace app\tests\core;
+namespace Tests\Core;
 
-use app\core\Controller;
-use app\core\exception\NotFoundException;
+use Core\Controller;
+use Exception\NotFoundException;
 use PHPUnit\Framework\TestCase;
 
 class ControllerTest extends TestCase
@@ -13,7 +13,7 @@ class ControllerTest extends TestCase
         $this->expectException(NotFoundException::class);
 
         /** @var $controller Controller */
-        $controller = $this->getMockForAbstractClass('framework\core\Controller');
+        $controller = $this->getMockForAbstractClass('Core\Controller');
         $controller->notFoundTest();
     }
 }

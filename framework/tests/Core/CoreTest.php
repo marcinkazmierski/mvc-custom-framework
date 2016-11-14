@@ -1,7 +1,7 @@
 <?php
-namespace app\tests\core;
+namespace Tests\Core;
 
-use app\core\Core;
+use Core\Core;
 use PHPUnit\Framework\TestCase;
 
 class CoreTest extends TestCase

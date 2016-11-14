@@ -1,4 +1,4 @@
 /.idea
 logs/errors.log
 build/
-app/config/config.ini
+framework/config/config.ini

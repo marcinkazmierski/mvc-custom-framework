@@ -1,7 +1,7 @@
 <?php
-namespace app\tests\core;
+namespace Tests\Exception;
 
-use app\core\exception\AccessDeniedException;
+use Exception\AccessDeniedException;
 use PHPUnit\Framework\TestCase;
 
 class AccessDeniedExceptionTest extends TestCase

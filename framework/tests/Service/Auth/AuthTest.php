@@ -1,8 +1,8 @@
 <?php
-namespace app\tests\core;
+namespace Tests\Service\Auth;
 
-use app\core\Auth;
 use PHPUnit\Framework\TestCase;
+use Service\Auth\Auth;
 
 class AuthTest extends TestCase
 {
