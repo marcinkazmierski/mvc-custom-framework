@@ -1,7 +1,8 @@
 <?php
 declare(strict_types = 1);
 
-function __autoload($class_name)
+spl_autoload_register('MVCAutoLoader');
+function MVCAutoLoader($class_name)
 {
     $class_name = \Core\Core::dirNameFilter($class_name);
 
