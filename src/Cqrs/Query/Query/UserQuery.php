@@ -7,7 +7,7 @@ use Cqrs\Query\ViewObject\UserView;
 
 interface UserQuery
 {
-    public function getById(int $userId) : UserView;
+    public function getUserById(int $userId) : UserView;
 
-    public function getAll() : array;
+    public function getAllUsers() : array;
 }

@@ -5,14 +5,19 @@ namespace Controller;
 
 use Core\Controller;
 use Core\Core;
+use Cqrs\Query\Query\UserQuery;
+use Cqrs\Query\Query\UserQueryImpl;
 use Exception\AccessDeniedException;
 use Model\UserModel;
 
 class IndexController extends Controller
 {
+    protected $userQuery;
 
     public function __construct()
     {
+        /** @var userQuery */
+        $this->userQuery = new UserModel();
         parent::__construct();
     }
 
@@ -94,6 +99,13 @@ class IndexController extends Controller
             Core::redirect("/index.php/index/index");
         }
         return $this->renderView("insert");
+    }
+
+    public function usersAction()
+    {
+        // Query Command
+        $users = $this->userQuery->getAllUsers();
+        return $this->renderView("users", ['users' => $users]);
     }
 }
 

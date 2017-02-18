@@ -81,6 +81,12 @@ class Core
         $controller = 'Controller' . '\\' . $controller;
 
         if (class_exists($controller)) {
+            // TODO:
+            $class = new \ReflectionClass($controller);
+            $params = $class->getConstructor()->getParameters();
+            foreach ($params as $param) {
+                // $name = $param->getClass()->name;
+            }
             $c = new $controller();
             call_user_func_array(array($c, $function), array($param));
         } else {
