@@ -36,6 +36,10 @@ class IndexController extends Controller
         $this->commandBus = new SimpleCommandBus();
         $this->userRepository = new UserRepositoryImpl();
 
+        //TODO: Command register
+        $createUserHandler = new CreateUserHandler($this->userRepository);
+        $this->commandBus->registerHandler(CreateUserCommand::class, $createUserHandler);
+
         parent::__construct();
     }
 
@@ -126,13 +130,9 @@ class IndexController extends Controller
         $users = $this->userQuery->getAllUsers();
 
         // Command
-        // register:
-        $createUserHandler = new CreateUserHandler($this->userRepository);
-        $this->commandBus->registerHandler(CreateUserCommand::class, $createUserHandler);
-        $id = 0;
         $email = new Email('test@testtest.pl');
         $username = new UserName('ewa_' . rand());
-        $command = new CreateUserCommand($id, $email, $username);
+        $command = new CreateUserCommand($email, $username);
         $this->commandBus->handle($command);
 
         return $this->renderView("users", ['users' => $users]);

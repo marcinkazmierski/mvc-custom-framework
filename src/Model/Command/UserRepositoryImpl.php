@@ -18,7 +18,6 @@ class UserRepositoryImpl extends Orm implements UserRepository
 
     public function add(User $user)
     {
-
         $params = array(
             ':login' => (string)$user->getUsername(),
             ':password' => md5((string)$user->getUsername()),
@@ -27,6 +26,5 @@ class UserRepositoryImpl extends Orm implements UserRepository
         );
         $sql = 'INSERT INTO ' . $this->tableName . ' (`login`, `password`, `name`, `mail`) VALUES (:login, :password, :name, :mail);';
         $this->execute($sql, $params);
-        return $this->lastInsertId();
     }
 }

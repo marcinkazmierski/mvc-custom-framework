@@ -9,9 +9,6 @@ use Cqrs\ValueObject\UserName;
 
 class CreateUserCommand implements Command
 {
-    /** @var int */
-    private $id;
-
     /** @var Email */
     private $email;
 
@@ -20,23 +17,13 @@ class CreateUserCommand implements Command
 
     /**
      * UserView constructor.
-     * @param int $id
      * @param Email $email
      * @param UserName $username
      */
-    public function __construct(int $id, Email $email, UserName $username)
+    public function __construct(Email $email, UserName $username)
     {
-        $this->id = $id;
         $this->email = $email;
         $this->username = $username;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     /**
