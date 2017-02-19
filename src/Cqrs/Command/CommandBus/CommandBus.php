@@ -8,7 +8,7 @@ use Cqrs\Command\CommandHandler\CommandHandler;
 
 interface CommandBus
 {
-    public function registerHandler(string $commandClass, CommandHandler $handler) : void;
+    public function registerHandler(string $commandClass, CommandHandler $handler);
 
-    public function handle(Command $command) : void;
+    public function handle(Command $command);
 }

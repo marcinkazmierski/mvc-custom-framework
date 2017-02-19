@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Model;
+namespace Model\Query;
 
 use Cqrs\Query\Query\UserQuery;
 use Cqrs\Query\ViewObject\UserView;
@@ -9,7 +9,7 @@ use Cqrs\ValueObject\Email;
 use Cqrs\ValueObject\UserName;
 use Database\Orm\Orm;
 
-class UserModel extends Orm implements UserQuery
+class UserQueryImpl extends Orm implements UserQuery
 {
     private $tableName = "users";
 

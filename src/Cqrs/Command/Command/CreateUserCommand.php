@@ -1,12 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace Cqrs\Domain;
+namespace Cqrs\Command\Command;
+
 
 use Cqrs\ValueObject\Email;
 use Cqrs\ValueObject\UserName;
 
-class User
+class CreateUserCommand implements Command
 {
     /** @var int */
     private $id;
@@ -17,9 +18,15 @@ class User
     /** @var UserName */
     private $username;
 
-    public function __construct(Email $email, UserName $username)
+    /**
+     * UserView constructor.
+     * @param int $id
+     * @param Email $email
+     * @param UserName $username
+     */
+    public function __construct(int $id, Email $email, UserName $username)
     {
-        $this->id = rand(); // TODO: ID generator
+        $this->id = $id;
         $this->email = $email;
         $this->username = $username;
     }

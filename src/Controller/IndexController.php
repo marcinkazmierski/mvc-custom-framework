@@ -5,19 +5,37 @@ namespace Controller;
 
 use Core\Controller;
 use Core\Core;
+use Cqrs\Command\Command\CreateUserCommand;
+use Cqrs\Command\CommandBus\CommandBus;
+use Cqrs\Command\CommandBus\SimpleCommandBus;
+use Cqrs\Command\CommandHandler\CreateUserHandler;
+use Cqrs\Command\Repository\UserRepository;
 use Cqrs\Query\Query\UserQuery;
-use Cqrs\Query\Query\UserQueryImpl;
+use Model\Command\UserRepositoryImpl;
+use Model\Query\UserQueryImpl;
+use Cqrs\ValueObject\Email;
+use Cqrs\ValueObject\UserName;
 use Exception\AccessDeniedException;
-use Model\UserModel;
+
 
 class IndexController extends Controller
 {
+    /** @var userQuery */
     protected $userQuery;
+
+    /** @var  CommandBus */
+    protected $commandBus;
+
+    /** @var UserRepository */
+    protected $userRepository;
 
     public function __construct()
     {
-        /** @var userQuery */
-        $this->userQuery = new UserModel();
+        // TODO: DI
+        $this->userQuery = new UserQueryImpl();
+        $this->commandBus = new SimpleCommandBus();
+        $this->userRepository = new UserRepositoryImpl();
+
         parent::__construct();
     }
 
@@ -103,8 +121,20 @@ class IndexController extends Controller
 
     public function usersAction()
     {
-        // Query Command
+        // Query
+        // TODO: from cache
         $users = $this->userQuery->getAllUsers();
+
+        // Command
+        // register:
+        $createUserHandler = new CreateUserHandler($this->userRepository);
+        $this->commandBus->registerHandler(CreateUserCommand::class, $createUserHandler);
+        $id = 0;
+        $email = new Email('test@testtest.pl');
+        $username = new UserName('ewa_' . rand());
+        $command = new CreateUserCommand($id, $email, $username);
+        $this->commandBus->handle($command);
+
         return $this->renderView("users", ['users' => $users]);
     }
 }

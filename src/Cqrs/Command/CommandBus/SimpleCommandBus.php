@@ -11,12 +11,12 @@ class SimpleCommandBus implements CommandBus
     /** @var CommandHandler[] */
     private $handlers = [];
 
-    public function registerHandler(string $commandClass, CommandHandler $handler) : void
+    public function registerHandler(string $commandClass, CommandHandler $handler)
     {
         $this->handlers[$commandClass] = $handler;
     }
 
-    public function handle(Command $command) : void
+    public function handle(Command $command)
     {
         if (isset($this->handlers[get_class($command)])) {
             $this->handlers[get_class($command)]->handle($command);
