@@ -2,4 +2,8 @@
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php/?([^/]+)/?([^/]*)/?([^/]*)/? /index.php?controller=$1&action=$2&param=$3 [NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 </IfModule>
+
