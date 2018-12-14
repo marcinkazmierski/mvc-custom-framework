@@ -17,7 +17,7 @@ class UserModel extends Orm
     public function getUserByLoginPassword($login, $password)
     {
         $login = htmlspecialchars($login);
-        $password = md5($password);
+        $password = md5($password); // TODO: password hash provider
         $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login=:login AND password=:password;';
         $params = array(
             ':login' => $login,
@@ -33,7 +33,7 @@ class UserModel extends Orm
     function addUser($login, $password)
     {
         $login = htmlspecialchars($login);
-        $password = md5($password);
+        $password = md5($password); // TODO: password hash provider
         $params = array(
             ':login' => $login,
             ':password' => $password,
