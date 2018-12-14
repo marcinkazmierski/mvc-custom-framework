@@ -45,7 +45,10 @@ User: test / test
 
 ### TODO 
 - translations
-- PHP7
+- PHP7.3
+- docker-compose
+- password hash provider
+- composer
 
 ###PHPUnit
 - Tests run: php phpunit.phar framework/tests/
