@@ -30,6 +30,10 @@ INSERT INTO `users` (`id`, `login`, `password`) VALUES (NULL, 'test', '098f6bcd4
 ```
 User: test / test
 
+### Run docker
+- `docker-compose up -d`
+- `docker-compose exec app bash`
+
 ### What implemented? 
 - MVC Architecture
 - __autoload
@@ -49,6 +53,7 @@ User: test / test
 - docker-compose
 - password hash provider
 - composer
+- simple DI
 
 ###PHPUnit
 - Tests run: php phpunit.phar framework/tests/

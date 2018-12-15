@@ -1,4 +1,6 @@
 /.idea
-logs/errors.log
+logs/*.log
 build/
 framework/config/config.ini
+docker/app/apache/logs/*.log
+docker/mysql/data/*
