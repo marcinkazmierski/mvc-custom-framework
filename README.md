@@ -52,7 +52,7 @@ User: test / test
 - PHP7.3
 - password hash provider
 - composer
-- simple DI
+- simple DI 
 
 ###PHPUnit
 - Tests run: php phpunit.phar framework/tests/
