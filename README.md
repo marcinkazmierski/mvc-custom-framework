@@ -50,7 +50,6 @@ User: test / test
 ### TODO 
 - translations
 - PHP7.3
-- docker-compose
 - password hash provider
 - composer
 - simple DI
