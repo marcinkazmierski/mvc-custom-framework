@@ -46,12 +46,14 @@ User: test / test
 - environments [dev, prod]
 - flash messages
 - Exceptions
+- docker-compose
+
 
 ### TODO 
 - translations
 - PHP7.3
 - password hash provider
-- composer
+- composer + vendors
 - simple DI 
 
 ###PHPUnit
