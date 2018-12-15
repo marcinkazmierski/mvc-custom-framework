@@ -4,3 +4,4 @@ build/
 config/config.ini
 docker/app/apache/logs/*.log
 docker/mysql/data/*
+/vendor/

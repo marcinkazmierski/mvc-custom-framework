@@ -1,0 +1,14 @@
+{
+    "name": "mvc-custom-framework/core",
+    "description": "Custom fast and simple MVC framework",
+    "type": "project",
+    "require": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "authors": [
+        {
+            "name": "marcinkazmierski",
+            "email": "marcin.ryszard.kazmierski+github@gmail.com"
+        }
+    ]
+}

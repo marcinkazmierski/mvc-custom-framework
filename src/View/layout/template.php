@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="/resources/assets/style/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/resources/assets/style/bootstrap-theme.min.css" rel="stylesheet"/>
-    <link href="/resources/assets/style/style.css" rel="stylesheet"/>
+    <link href="/public/assets/style/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/public/assets/style/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="/public/assets/style/style.css" rel="stylesheet"/>
     <title><?php print t('MVC custom'); ?></title>
 </head>
 <body>
