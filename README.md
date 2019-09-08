@@ -50,6 +50,7 @@ User: test / test
 
 
 ### TODO 
+- docker
 - translations
 - PHP7.3
 - password hash provider
