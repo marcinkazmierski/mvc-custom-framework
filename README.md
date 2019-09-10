@@ -47,16 +47,15 @@ User: test / test
 - flash messages
 - Exceptions
 - docker-compose
-
+- composer + vendors
 
 ### TODO 
-- docker
+- update bootstrap ver
 - translations
 - PHP7.3
 - password hash provider
-- composer + vendors
 - simple DI 
 
 ###PHPUnit
-- Tests run: php phpunit.phar framework/tests/
+- Tests run in docker: vendor/bin/phpunit framework/tests/
 - Tests results: /build/coverage/

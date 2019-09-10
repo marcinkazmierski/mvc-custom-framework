@@ -4,12 +4,12 @@ declare(strict_types = 1);
 spl_autoload_register('MVCAutoLoader');
 function MVCAutoLoader($class_name)
 {
-    $class_name = \Core\Core::dirNameFilter($class_name);
+    $className = \Core\Core::dirNameFilter($class_name);
 
-    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
+    $class = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
     $fileClass = FRAMEWORK_SRC_PATH . $class;
 
-    if (file_exists($fileClass)) { // TODO: refactoring
+    if (file_exists($fileClass)) {
         require_once $fileClass;
     } else {
         $fileClass = APP_SRC_PATH . $class;

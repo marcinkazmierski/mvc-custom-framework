@@ -14,7 +14,8 @@ class ExceptionControllerTest extends TestCase
     {
         $controller = new ExceptionController();
         ob_start();
-        $controller->render(new \Exception("Error test"));
+        $response = $controller->render(new \Exception("Error test"));
+        print $response;
         $return = ob_get_clean();
         $this->assertNotEmpty($return);
     }

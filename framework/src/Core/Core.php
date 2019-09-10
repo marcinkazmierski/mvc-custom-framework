@@ -82,7 +82,7 @@ class Core
 
         if (class_exists($controller)) {
             $c = new $controller();
-            call_user_func_array(array($c, $function), array($param));
+            print call_user_func_array(array($c, $function), array($param));
         } else {
             throw new \Exception(t('Controller class not found.'));
         }
