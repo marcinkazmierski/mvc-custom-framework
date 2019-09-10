@@ -1,9 +1,9 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Core;
 
-
+use Core\DependencyInjection\Container;
 use Exception\ExceptionController;
 use Service\Profiler\Profiler;
 
@@ -45,7 +45,7 @@ class Core
             Core::useController($controller, $action, $param);
         } catch (\Exception $e) {
             $exception = new ExceptionController();
-            $exception->render($e);
+            print $exception->render($e);
             error_log(t('Fatal Error: ' . $e->getMessage()));
         }
     }
@@ -81,23 +81,38 @@ class Core
         $controller = 'Controller' . '\\' . $controller;
 
         if (class_exists($controller)) {
-            $c = new $controller();
+
+            $container = new Container();
+            /** @var Controller $c */
+            $c = $container->get($controller);
+            $c->setContainer($container);
             print call_user_func_array(array($c, $function), array($param));
         } else {
             throw new \Exception(t('Controller class not found.'));
         }
     }
 
-    private static function load($view, $data = null)
+    /**
+     * @param string $view
+     * @param null $data @todo: as array
+     * @return string
+     */
+    private static function load(string $view, $data = null)
     {
         extract(array("content" => $data));
         ob_start();
         require(APP_SRC_PATH . "/View/templates/$view.php");
         $content = ob_get_clean();
-        return $content;
+        return (string)$content;
     }
 
-    public static function loadView($view, $data = null, $returnOnlyContent = false)
+    /**
+     * @param string $view
+     * @param null $data @todo: as array
+     * @param bool $returnOnlyContent
+     * @return string
+     */
+    public static function loadView(string $view, $data = null, bool $returnOnlyContent = false)
     {
         if ($returnOnlyContent) {
             return self::load($view, $data);
@@ -106,6 +121,6 @@ class Core
         ob_start();
         require(APP_SRC_PATH . "/View/layout/template.php");
         $content = ob_get_clean();
-        return $content;
+        return (string)$content;
     }
 }

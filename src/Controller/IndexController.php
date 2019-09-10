@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Controller;
 
@@ -10,20 +10,28 @@ use Model\UserModel;
 
 class IndexController extends Controller
 {
+    /** @var UserModel */
+    protected $userModel;
 
-    public function __construct()
+    /**
+     * IndexController constructor.
+     * @param UserModel $userModel
+     */
+    public function __construct(UserModel $userModel)
     {
-        parent::__construct();
+        $this->userModel = $userModel;
     }
 
+    /**
+     * @return \Response\Response
+     */
     public function indexAction()
     {
-        $u = new UserModel();
-        $users = $this->cache->getCache('users');
+        $users = $this->getCache()->getCache('users');
 
         if (!$users) {
-            $users = $u->getAll();
-            $this->cache->setCache('users', $users, 10);
+            $users = $this->userModel->getAll();
+            $this->getCache()->setCache('users', $users, 10);
         }
         $params = array(
             'users' => $users,
@@ -34,27 +42,32 @@ class IndexController extends Controller
 
     public function jsonAction()
     {
-        $u = new UserModel();
-        $users = $this->cache->getCache('users');
+        $users = $this->getCache()->getCache('users');
         if (!$users) {
-            $users = $u->getAll();
-            $this->cache->setCache('users', $users, 10);
+            $users = $this->userModel->getAll();
+            $this->getCache()->setCache('users', $users, 10);
         }
 
         $usersJson = json_encode($users);
         return $this->renderView("json", $usersJson, 'application/json', true);
     }
 
+    /**
+     * @param $id
+     * @return \Response\Response
+     */
     public function userAction($id)
     {
-        $u = new UserModel();
-        $user = $u->getById($id);
+        $user = $this->userModel->getById($id);
         if (!$this->isAuth()) {
             Core::redirect("/index.php/index/login");
         }
         return $this->renderView("user", $user);
     }
 
+    /**
+     * @return \Response\Response
+     */
     public function loginAction()
     {
         if ($this->isAuth()) {
@@ -62,8 +75,7 @@ class IndexController extends Controller
         }
 
         if (!empty($_POST['login']) && !empty($_POST['password'])) {
-            $u = new UserModel();
-            $user = $u->getUserByLoginPassword($_POST['login'], $_POST['password']);
+            $user = $this->userModel->getUserByLoginPassword($_POST['login'], $_POST['password']);
 
             if ($user) {
                 $this->setAuth($user->login);
@@ -75,12 +87,19 @@ class IndexController extends Controller
         return $this->renderView("login");
     }
 
+    /**
+     * @return \Response\Response
+     */
     public function logoutAction()
     {
         $this->destroyAuth();
         return $this->renderView("logout");
     }
 
+    /**
+     * @return \Response\Response
+     * @throws AccessDeniedException
+     */
     public function insertAction()
     {
         if (!$this->isAuth()) {
@@ -88,9 +107,8 @@ class IndexController extends Controller
         }
 
         if (isset($_POST['login']) && isset($_POST['password'])) {
-            $u = new UserModel();
-            $id = $u->addUser($_POST['login'], $_POST['password']);
-            $this->cache->dropByKey('users');
+            $id = $this->userModel->addUser($_POST['login'], $_POST['password']);
+            $this->getCache()->dropByKey('users');
             Core::redirect("/index.php/index/index");
         }
         return $this->renderView("insert");

@@ -34,10 +34,11 @@ class Profiler implements IProfiler
         if ($this->environment === 'dev') {
             $headers = headers_list();
             foreach ($headers as $header) {
-                if (stripos($header, "Content-type: text/html") !== false) {
-                    return true;
+                if (stripos($header, "Content-type: application/json") !== false) {
+                    return false;
                 }
             }
+            return true;
         }
         return false;
     }

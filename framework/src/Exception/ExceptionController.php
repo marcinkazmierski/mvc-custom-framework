@@ -8,11 +8,6 @@ use Core\Controller;
 
 class ExceptionController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function render(\Exception $exception)
     {
         return $this->renderView("exception", $exception->getMessage(), null, false, 500);

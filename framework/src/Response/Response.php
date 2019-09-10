@@ -21,15 +21,12 @@ class Response
     private function setHeaders()
     {
         header("HTTP/1.1 " . $this->statusCode . " " . $this->getStatusMessage());
-        header("Content-Type:" . $this->contentType);
+        header("Content-Type: " . $this->contentType);
     }
 
     public function __construct(string $data, int $status = null, string $content_type = null)
     {
-        if (!$content_type) {
-            $content_type = "text/html";
-        }
-        $this->contentType = $content_type;
+        $this->contentType = $content_type??"text/html";
         $this->statusCode = $status ?? 200;
         $this->body = $data;
     }
@@ -78,7 +75,7 @@ class Response
             503 => 'Service Unavailable',
             504 => 'Gateway Timeout',
             505 => 'HTTP Version Not Supported');
-        return ($status[$this->_code]) ? $status[$this->_code] : $status[500];
+        return ($status[$this->statusCode]) ? $status[$this->statusCode] : $status[500];
     }
 
     public function __toString()
