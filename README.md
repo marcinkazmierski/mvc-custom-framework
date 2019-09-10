@@ -48,14 +48,14 @@ User: test / test
 - Exceptions
 - docker-compose
 - composer + vendors
+- simple DI 
 
 ### TODO 
 - update bootstrap ver
 - translations
 - PHP7.3
-- password hash provider
-- simple DI 
+- password hash provider 
 
-###PHPUnit
+### PHPUnit
 - Tests run in docker: vendor/bin/phpunit framework/tests/
 - Tests results: /build/coverage/
