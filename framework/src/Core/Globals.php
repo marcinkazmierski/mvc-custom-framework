@@ -4,12 +4,12 @@ declare(strict_types = 1);
 spl_autoload_register('MVCAutoLoader');
 function MVCAutoLoader($class_name)
 {
-    $class_name = \Core\Core::dirNameFilter($class_name);
+    $className = \Core\Core::dirNameFilter($class_name);
 
-    $class = str_replace('\\', DIRECTORY_SEPARATOR, $class_name) . '.php';
+    $class = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
     $fileClass = FRAMEWORK_SRC_PATH . $class;
 
-    if (file_exists($fileClass)) { // TODO: refactoring
+    if (file_exists($fileClass)) {
         require_once $fileClass;
     } else {
         $fileClass = APP_SRC_PATH . $class;
@@ -21,9 +21,13 @@ function MVCAutoLoader($class_name)
 
 /**
  * Global functions:
- *
- *
+ */
+
+/**
  * Return translated text.
+ *
+ * @param $string
+ * @return string
  */
 function t($string)
 {
@@ -33,8 +37,10 @@ function t($string)
 
 /**
  * Set flash message into session.
+ *
+ * @param string $message
  */
-function set_flash_message($message)
+function set_flash_message(string $message)
 {
     if (empty($_SESSION['flash_message']) || !is_array($_SESSION['flash_message'])) {
         $_SESSION['flash_message'] = array();
@@ -43,7 +49,8 @@ function set_flash_message($message)
 }
 
 /**
- * Return HTML with all flash messages.
+ *  Return HTML with all flash messages.
+ * @return string
  */
 function get_all_flash_messages()
 {

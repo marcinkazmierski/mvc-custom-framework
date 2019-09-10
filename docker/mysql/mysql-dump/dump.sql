@@ -20,4 +20,4 @@ CREATE TABLE IF NOT EXISTS `mvc_db`.`caches` (
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO `mvc_db`.`users` (`id`, `login`, `password`) VALUES (NULL, 'test', '098f6bcd4621d373cade4e832627b4f6');
+INSERT INTO `mvc_db`.`users` (`id`, `login`, `password`) VALUES (NULL, 'test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08');

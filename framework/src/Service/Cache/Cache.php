@@ -14,20 +14,8 @@ class Cache extends Orm
         parent::__construct($this->tableName);
     }
 
-    protected function isDevEnvironment()
-    {
-        if ($this->environment === 'dev') {
-            return true;
-        }
-        return false;
-    }
-
     public function getCache($cache_key)
     {
-        if ($this->isDevEnvironment()) {
-            return false; // dev environment
-        }
-
         $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE cache_key=:cache_key;';
         $params = array(':cache_key' => $cache_key);
         $results = $this->execute($sql, $params);
@@ -51,10 +39,6 @@ class Cache extends Orm
 
     public function setCache($cache_key, $value, $expire = 0)
     {
-        if ($this->isDevEnvironment()) {
-            return false; // dev environment
-        }
-
         $now = strtotime('now');
         if ($expire > 0) {
             $expire = $now + $expire;

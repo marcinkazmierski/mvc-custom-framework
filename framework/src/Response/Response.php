@@ -1,32 +1,37 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Response;
 
-
+/**
+ * Class Response
+ * @package Response
+ */
 class Response
 {
-    private $_code = 200;
-    public $_content_type;
+    /** @var int */
+    private $statusCode;
+
+    /** @var string */
+    private $contentType;
+
+    /** @var string */
+    private $body = '';
 
     private function setHeaders()
     {
-        header("HTTP/1.1 " . $this->_code . " " . $this->getStatusMessage());
-        header("Content-Type:" . $this->_content_type);
+        header("HTTP/1.1 " . $this->statusCode . " " . $this->getStatusMessage());
+        header("Content-Type: " . $this->contentType);
     }
 
-    public function __construct(string $data, int $status = 200, string $content_type = null)
+    public function __construct(string $data, int $status = null, string $content_type = null)
     {
-        if (!$content_type) {
-            $content_type = "text/html";
-        }
-        $this->_content_type = $content_type;
-        $this->_code = $status;
-        $this->setHeaders();
-        print $data;
+        $this->contentType = $content_type??"text/html";
+        $this->statusCode = $status ?? 200;
+        $this->body = $data;
     }
 
-    private function getStatusMessage()
+    private function getStatusMessage(): string
     {
         $status = array(
             100 => 'Continue',
@@ -70,6 +75,14 @@ class Response
             503 => 'Service Unavailable',
             504 => 'Gateway Timeout',
             505 => 'HTTP Version Not Supported');
-        return ($status[$this->_code]) ? $status[$this->_code] : $status[500];
+        return ($status[$this->statusCode]) ? $status[$this->statusCode] : $status[500];
     }
+
+    public function __toString()
+    {
+        $this->setHeaders();
+        return $this->body;
+    }
+
+
 }

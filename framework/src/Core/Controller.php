@@ -3,48 +3,92 @@ declare(strict_types=1);
 
 namespace Core;
 
-
+use Core\DependencyInjection\Container;
 use Exception\NotFoundException;
 use Response\Response;
 use Service\Auth\Auth;
 use Service\Cache\Cache;
 
+/**
+ * Class Controller
+ * @package Core
+ */
 abstract class Controller implements IController
 {
-    protected static $controller = null;
-    protected $cache = null;
-    protected $auth = null;
+    /** @var Container */
+    private $container;
 
-    public function __construct()
+    /**
+     * @param Container $container
+     */
+    public function setContainer(Container $container): void
     {
-        $this->cache = new Cache(); // TODO: DI
-        $this->auth = Auth::getInstance();
+        $this->container = $container;
     }
 
+    /**
+     * @return Cache
+     */
+    public function getCache(): Cache
+    {
+        /** @var Cache $instance */
+        $instance = $this->container->get(Cache::class);
+        return $instance;
+    }
+
+    /**
+     * @return Auth
+     */
+    public function getAuth(): Auth
+    {
+        /** @var Auth $instance */
+        $instance = $this->container->get(Auth::class);
+        return $instance;
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @throws NotFoundException
+     */
     public function __call($name, $arguments) // if page not found
     {
         throw new NotFoundException();
     }
 
-    public function renderView($viewName, $variables = null, $content_type = null, $returnOnlyContent = false, $status = 200)
+    /**
+     * @param string $viewName
+     * @param null $variables @todo: as array
+     * @param string|null $content_type
+     * @param bool $returnOnlyContent
+     * @param int $status
+     * @return Response
+     */
+    public function renderView(string $viewName, $variables = null, string $content_type = null, bool $returnOnlyContent = false, int $status = 200)
     {
         $body = Core::loadView($viewName, $variables, $returnOnlyContent);
         return new Response($body, $status, $content_type);
     }
 
+    /**
+     * @return bool
+     */
     public function isAuth()
     {
-        return $this->auth->isAuth();
+        return $this->getAuth()->isAuth();
     }
 
-
+    /**
+     * @param $login
+     * @return bool
+     */
     public function setAuth($login)
     {
-        return $this->auth->setAuth($login);
+        return $this->getAuth()->setAuth($login);
     }
 
     public function destroyAuth()
     {
-        $this->auth->destroyAuth();
+        $this->getAuth()->destroyAuth();
     }
 }

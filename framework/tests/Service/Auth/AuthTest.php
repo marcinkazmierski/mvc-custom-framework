@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Service\Auth;
 
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,7 @@ class AuthTest extends TestCase
 
     public function setUp()
     {
-        $this->auth = Auth::getInstance();
+        $this->auth = new Auth();
         $this->auth->destroyAuth();
     }
 

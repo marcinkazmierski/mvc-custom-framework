@@ -1,6 +1,7 @@
 /.idea
 logs/*.log
 build/
-framework/config/config.ini
+config/config.ini
 docker/app/apache/logs/*.log
 docker/mysql/data/*
+/vendor/

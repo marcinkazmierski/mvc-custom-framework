@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Service\Profiler;
 
@@ -32,6 +32,12 @@ class Profiler implements IProfiler
     public function isEnabled()
     {
         if ($this->environment === 'dev') {
+            $headers = headers_list();
+            foreach ($headers as $header) {
+                if (stripos($header, "Content-type: application/json") !== false) {
+                    return false;
+                }
+            }
             return true;
         }
         return false;

@@ -12,6 +12,11 @@ class Config
     {
     }
 
+    /**
+     * @param $key
+     * @return null
+     * @throws \Exception
+     */
     public static function getOption($key)
     {
         if (!self::$configData) {
@@ -23,6 +28,10 @@ class Config
         return null;
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     private static function loadConfigFile()
     {
         $file = FRAMEWORK_CONFIG_PATH . self::$fileConfig;

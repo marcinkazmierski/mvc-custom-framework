@@ -1,0 +1,8 @@
+; Configuration file
+db_host = "mysql"
+db_name = "mvc_db"
+db_user = "test"
+db_password = "test"
+
+; environments: 'prod', 'dev', 'test'.
+environment = "dev"

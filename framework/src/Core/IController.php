@@ -5,11 +5,11 @@ namespace Core;
 
 interface IController
 {
-    public function renderView($viewName, $variables);
+    public function renderView(string $viewName, $variables = null, string $content_type = null, bool $returnOnlyContent = false, int $status = 200);
 
     public function isAuth();
 
-    public function setAuth($login);
+    public function setAuth(string $login);
 
     public function destroyAuth();
 }

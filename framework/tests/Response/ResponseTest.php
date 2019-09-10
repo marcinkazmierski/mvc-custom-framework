@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Response;
 
 use PHPUnit\Framework\TestCase;
@@ -13,7 +14,8 @@ class ResponseTest extends TestCase
     {
         $body = 'Test';
         ob_start();
-        new Response($body);
+        $response = new Response($body);
+        print $response;
         $response = ob_get_clean();
         $this->assertEquals($body, $response);
     }
