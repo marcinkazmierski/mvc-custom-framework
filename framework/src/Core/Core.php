@@ -27,8 +27,8 @@ class Core
 
     private static function startDispatcher()
     {
-        $controller = false;
-        $action = false;
+        $controller = '';
+        $action = '';
         $param = false;
 
         if (isset($_GET['action'])) {
@@ -63,7 +63,13 @@ class Core
         return $name;
     }
 
-    public static function useController($controller = false, $action = false, $param = false)
+    /**
+     * @param string $controller
+     * @param string $action
+     * @param bool $param
+     * @throws \Exception
+     */
+    public static function useController(string $controller = '',string $action = '', $param = false)
     {
         if (!$controller) {
             $controller = 'index';

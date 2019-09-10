@@ -8,6 +8,10 @@ use PHPUnit\Framework\TestCase;
 class ControllerTest extends TestCase
 {
 
+    /**
+     * @test
+     * @throws \ReflectionException
+     */
     public function testPageNotFound()
     {
         $this->expectException(NotFoundException::class);

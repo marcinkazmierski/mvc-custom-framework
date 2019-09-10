@@ -3,7 +3,8 @@
     "description": "Custom fast and simple MVC framework",
     "type": "project",
     "require": {
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+      "ext-pdo": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5"

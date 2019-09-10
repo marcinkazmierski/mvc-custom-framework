@@ -21,9 +21,13 @@ function MVCAutoLoader($class_name)
 
 /**
  * Global functions:
- *
- *
+ */
+
+/**
  * Return translated text.
+ *
+ * @param $string
+ * @return string
  */
 function t($string)
 {
@@ -33,8 +37,10 @@ function t($string)
 
 /**
  * Set flash message into session.
+ *
+ * @param string $message
  */
-function set_flash_message($message)
+function set_flash_message(string $message)
 {
     if (empty($_SESSION['flash_message']) || !is_array($_SESSION['flash_message'])) {
         $_SESSION['flash_message'] = array();
@@ -43,7 +49,8 @@ function set_flash_message($message)
 }
 
 /**
- * Return HTML with all flash messages.
+ *  Return HTML with all flash messages.
+ * @return string
  */
 function get_all_flash_messages()
 {
