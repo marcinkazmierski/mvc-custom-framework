@@ -40,6 +40,9 @@ class IndexController extends Controller
         return $this->renderView("index", $params);
     }
 
+    /**
+     * @return \Response\Response
+     */
     public function jsonAction()
     {
         $users = $this->getCache()->getCache('users');
@@ -48,8 +51,16 @@ class IndexController extends Controller
             $this->getCache()->setCache('users', $users, 10);
         }
 
-        $usersJson = json_encode($users);
-        return $this->renderView("json", $usersJson, 'application/json', true);
+        //presenter
+        $usersJson = [];
+        foreach ($users as $user) {
+            $usersJson[] = [
+                'id' => $user->id,
+                'login' => $user->login,
+            ];
+        }
+
+        return $this->renderView("json", json_encode($usersJson), 'application/json', true);
     }
 
     /**
