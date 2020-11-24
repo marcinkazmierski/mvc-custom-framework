@@ -1,6 +1,6 @@
 # Simple MVC framework [PHP]
 
-## Version v1.0.1
+## Version v2.0.0 beta
 
 ### database:
 ```sql
