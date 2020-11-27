@@ -3,7 +3,6 @@
   "description": "Custom fast and simple MVC framework",
   "type": "project",
   "require": {
-    "monolog/monolog": "^1.24",
     "ext-pdo": "*",
     "ext-json": "*"
   },
