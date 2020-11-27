@@ -1,12 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Controller;
+namespace App\Controller;
 
-use Core\Controller;
-use Core\Core;
-use Exception\AccessDeniedException;
-use Model\UserModel;
+
+use App\Model\UserModel;
+use Framework\Core\Controller;
+use Framework\Core\Core;
+use Framework\Exception\AccessDeniedException;
+use Framework\Response\Response;
 
 class IndexController extends Controller
 {
@@ -23,7 +25,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      */
     public function indexAction()
     {
@@ -41,7 +43,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      */
     public function jsonAction()
     {
@@ -65,7 +67,7 @@ class IndexController extends Controller
 
     /**
      * @param $id
-     * @return \Response\Response
+     * @return Response
      */
     public function userAction($id)
     {
@@ -77,7 +79,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      */
     public function loginAction()
     {
@@ -99,7 +101,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      */
     public function logoutAction()
     {
@@ -108,7 +110,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      * @throws AccessDeniedException
      */
     public function insertAction()

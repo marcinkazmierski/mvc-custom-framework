@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Database\Hydrator;
+namespace Framework\Database\Hydrator;
 
-use Database\Entity\Entity;
+use Framework\Database\Entity\Entity;
 
 class Hydrator implements IHydrator
 {

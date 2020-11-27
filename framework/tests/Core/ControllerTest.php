@@ -1,8 +1,8 @@
 <?php
-namespace Tests\Core;
+namespace Framework\Tests\Core;
 
-use Core\Controller;
-use Exception\NotFoundException;
+use Framework\Core\Controller;
+use Framework\Exception\NotFoundException;
 use PHPUnit\Framework\TestCase;
 
 class ControllerTest extends TestCase

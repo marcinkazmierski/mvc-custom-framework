@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Service\Profiler;
+namespace Framework\Service\Profiler;
 
-use Core\Config;
+use Framework\Core\Config;
 
 class Profiler implements IProfiler
 {
@@ -12,6 +12,10 @@ class Profiler implements IProfiler
 
     private static $instance = null;
 
+    /**
+     * Profiler constructor.
+     * @throws \Exception
+     */
     private function __construct()
     {
         $this->environment = Config::getOption('environment');
