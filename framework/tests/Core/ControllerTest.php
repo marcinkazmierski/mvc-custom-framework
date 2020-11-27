@@ -17,7 +17,7 @@ class ControllerTest extends TestCase
         $this->expectException(NotFoundException::class);
 
         /** @var $controller Controller */
-        $controller = $this->getMockForAbstractClass('Core\Controller');
+        $controller = $this->getMockForAbstractClass('Framework\Core\Controller');
         $controller->notFoundTest();
     }
 }
