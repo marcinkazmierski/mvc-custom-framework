@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Core\DependencyInjection;
+namespace Framework\Core\DependencyInjection;
 
 class Container implements ContainerInterface
 {

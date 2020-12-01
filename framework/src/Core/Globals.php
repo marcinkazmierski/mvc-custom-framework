@@ -4,7 +4,7 @@ declare(strict_types = 1);
 spl_autoload_register('MVCAutoLoader');
 function MVCAutoLoader($class_name)
 {
-    $className = \Core\Core::dirNameFilter($class_name);
+    $className =  \Framework\Core\Core::dirNameFilter($class_name);
 
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
     $fileClass = FRAMEWORK_SRC_PATH . $class;

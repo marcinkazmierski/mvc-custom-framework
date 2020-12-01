@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Core;
+namespace Framework\Core;
 
-use Core\DependencyInjection\Container;
-use Exception\NotFoundException;
-use Response\Response;
-use Service\Auth\Auth;
-use Service\Cache\Cache;
+
+use Framework\Core\DependencyInjection\Container;
+use Framework\Exception\NotFoundException;
+use Framework\Response\Response;
+use Framework\Service\Auth\Auth;
+use Framework\Service\Cache\Cache;
 
 /**
  * Class Controller

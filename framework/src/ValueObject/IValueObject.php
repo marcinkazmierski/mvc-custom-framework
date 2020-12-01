@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace ValueObject;
+namespace Framework\ValueObject;
 
 interface IValueObject
 {

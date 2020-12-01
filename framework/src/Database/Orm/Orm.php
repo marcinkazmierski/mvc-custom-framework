@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Database\Orm;
+namespace Framework\Database\Orm;
 
-use Core\Config;
-use Database\Database;
+use Framework\Core\Config;
+use Framework\Database\Database;
 
 abstract class Orm implements IOrm
 {
@@ -12,6 +12,11 @@ abstract class Orm implements IOrm
     protected $databaseInstance;
     protected $environment;
 
+    /**
+     * Orm constructor.
+     * @param $tableName
+     * @throws \Exception
+     */
     public function __construct($tableName)
     {
         $this->tableName = $tableName;
@@ -24,8 +29,7 @@ abstract class Orm implements IOrm
 
     public function getAll($limit = 20)
     {
-        $results = $this->execute('SELECT * FROM ' . $this->tableName . ' LIMIT ' . $limit);
-        return $results;
+        return $this->execute('SELECT * FROM ' . $this->tableName . ' LIMIT ' . $limit);
     }
 
     public function getById($id)

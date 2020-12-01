@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Core;
+namespace Framework\Core;
 
-use Core\DependencyInjection\Container;
-use Exception\ExceptionController;
-use Service\Profiler\Profiler;
+use Framework\Core\DependencyInjection\Container;
+use Framework\Exception\ExceptionController;
+use Framework\Service\Profiler\Profiler;
 
 class Core
 {
@@ -69,7 +69,7 @@ class Core
      * @param bool $param
      * @throws \Exception
      */
-    public static function useController(string $controller = '',string $action = '', $param = false)
+    public static function useController(string $controller = '', string $action = '', $param = false)
     {
         if (!$controller) {
             $controller = 'index';
@@ -84,7 +84,7 @@ class Core
         $controller = $controller . "Controller";
         $function = $action . "Action";
 
-        $controller = 'Controller' . '\\' . $controller;
+        $controller = 'App\\Controller\\' . $controller;
 
         if (class_exists($controller)) {
 

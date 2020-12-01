@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Database\Entity;
+namespace Framework\Database\Entity;
 
 abstract class Entity
 {

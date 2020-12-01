@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Response;
+namespace Framework\Response;
 
 /**
  * Class Response

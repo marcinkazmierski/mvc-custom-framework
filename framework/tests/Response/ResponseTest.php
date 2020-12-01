@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Response;
+namespace Framework\Tests\Response;
 
+use Framework\Response\Response;
 use PHPUnit\Framework\TestCase;
-use Response\Response;
 
 class ResponseTest extends TestCase
 {

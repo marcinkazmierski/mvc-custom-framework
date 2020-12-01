@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Exception;
+namespace Framework\Exception;
 
 
-use Core\Controller;
+use Framework\Core\Controller;
 
 class ExceptionController extends Controller
 {

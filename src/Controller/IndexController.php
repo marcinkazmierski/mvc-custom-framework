@@ -1,12 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Controller;
+namespace App\Controller;
 
-use Core\Controller;
-use Core\Core;
-use Exception\AccessDeniedException;
-use Model\UserModel;
+
+use App\Model\UserModel;
+use Framework\Core\Controller;
+use Framework\Core\Core;
+use Framework\Exception\AccessDeniedException;
+use Framework\Response\Response;
 
 class IndexController extends Controller
 {
@@ -23,7 +25,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      */
     public function indexAction()
     {
@@ -40,6 +42,9 @@ class IndexController extends Controller
         return $this->renderView("index", $params);
     }
 
+    /**
+     * @return Response
+     */
     public function jsonAction()
     {
         $users = $this->getCache()->getCache('users');
@@ -48,13 +53,21 @@ class IndexController extends Controller
             $this->getCache()->setCache('users', $users, 10);
         }
 
-        $usersJson = json_encode($users);
-        return $this->renderView("json", $usersJson, 'application/json', true);
+        //presenter
+        $usersJson = [];
+        foreach ($users as $user) {
+            $usersJson[] = [
+                'id' => $user->id,
+                'login' => $user->login,
+            ];
+        }
+
+        return $this->renderView("json", json_encode($usersJson), 'application/json', true);
     }
 
     /**
      * @param $id
-     * @return \Response\Response
+     * @return Response
      */
     public function userAction($id)
     {
@@ -66,7 +79,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      */
     public function loginAction()
     {
@@ -88,7 +101,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      */
     public function logoutAction()
     {
@@ -97,7 +110,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @return \Response\Response
+     * @return Response
      * @throws AccessDeniedException
      */
     public function insertAction()

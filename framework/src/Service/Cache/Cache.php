@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Service\Cache;
+namespace Framework\Service\Cache;
 
-use Database\Orm\Orm;
+use Framework\Database\Orm\Orm;
 
 class Cache extends Orm
 {

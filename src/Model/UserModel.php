@@ -1,9 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace Model;
+namespace App\Model;
 
-use Database\Orm\Orm;
+
+use Framework\Database\Orm\Orm;
 
 class UserModel extends Orm
 {
@@ -34,6 +35,7 @@ class UserModel extends Orm
     {
         $login = htmlspecialchars($login);
         $password = hash('sha256', $password); // TODO: password hash provider
+
         $params = array(
             ':login' => $login,
             ':password' => $password,

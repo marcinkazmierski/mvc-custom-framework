@@ -35,6 +35,7 @@
                                             <li><a href="/index.php/index/login">Login</a></li>
                                             <li><a href="/index.php/index/logout">Logout</a></li>
                                             <li><a href="/index.php/index/json">json</a></li>
+                                            <li><a href="/index.php/index/404">Error 404</a></li>
                                         </ul>
                                     </div>
                                     <!--/.nav-collapse -->

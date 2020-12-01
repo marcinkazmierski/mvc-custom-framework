@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace Database\Repository;
+namespace Framework\Database\Repository;
 
 
-use Database\Entity\Entity;
+use Framework\Database\Entity\Entity;
 
 interface IRepository
 {
