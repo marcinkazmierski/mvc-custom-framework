@@ -34,11 +34,6 @@ class UserModel extends Orm
     function addUser($login, $password)
     {
         $login = htmlspecialchars($login);
-
-        var_dump(hash('sha256', $password));
-
-        var_dump(password_hash($password, PASSWORD_BCRYPT));
-die('test');
         $password = hash('sha256', $password); // TODO: password hash provider
 
         $params = array(
