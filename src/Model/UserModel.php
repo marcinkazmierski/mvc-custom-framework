@@ -5,47 +5,64 @@ namespace App\Model;
 
 
 use Framework\Database\Orm\Orm;
+use Framework\Exception\RuntimeException;
+use Framework\Security\PasswordManager;
 
 class UserModel extends Orm
 {
     private $tableName = "users";
 
-    function __construct()
+    /** @var PasswordManager */
+    private $passwordManager;
+
+    function __construct(PasswordManager $passwordManager)
     {
         parent::__construct($this->tableName);
+        $this->passwordManager = $passwordManager;
     }
 
+    /**
+     * @param $login
+     * @param $password
+     * @return mixed|null
+     * @throws RuntimeException
+     */
     public function getUserByLoginPassword($login, $password)
     {
         $login = htmlspecialchars($login);
-        $password = hash('sha256', $password); // TODO: password hash provider
-        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login=:login AND password=:password;';
+        $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login=:login;';
         $params = array(
             ':login' => $login,
-            ':password' => $password
         );
         $results = $this->execute($sql, $params);
         if (!empty($results) && is_array($results)) {
-            return array_pop($results);
+            $user = array_pop($results);
+            if ($this->passwordManager->isPasswordValid($password, $user->password)) {
+                return $user;
+            }
         }
         return null;
     }
 
+    /**
+     * @param $login
+     * @param $password
+     * @return int
+     * @throws RuntimeException
+     */
     function addUser($login, $password)
     {
         $login = htmlspecialchars($login);
-        $password = hash('sha256', $password); // TODO: password hash provider
-
         $params = array(
             ':login' => $login,
-            ':password' => $password,
+            ':password' => $this->passwordManager->generatePasswordHash($password),
         );
         $sql = 'INSERT INTO ' . $this->tableName . ' (login, password) VALUES (:login, :password);';
         $this->execute($sql, $params);
         return $this->lastInsertId();
     }
 
-    function findLikeLogin($text)
+    function findByLogin($text)
     {
         $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE login LIKE :text LIMIT 30;';
         $params = array(
