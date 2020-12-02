@@ -3,19 +3,23 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-
 use Framework\Database\Orm\Orm;
 use Framework\Exception\RuntimeException;
-use Framework\Security\PasswordManager;
+use Framework\Security\PasswordManagerInterface;
 
 class UserModel extends Orm
 {
     private $tableName = "users";
 
-    /** @var PasswordManager */
+    /** @var PasswordManagerInterface */
     private $passwordManager;
 
-    function __construct(PasswordManager $passwordManager)
+    /**
+     * UserModel constructor.
+     * @param PasswordManagerInterface $passwordManager
+     * @throws \Exception
+     */
+    function __construct(PasswordManagerInterface $passwordManager)
     {
         parent::__construct($this->tableName);
         $this->passwordManager = $passwordManager;
@@ -25,7 +29,6 @@ class UserModel extends Orm
      * @param $login
      * @param $password
      * @return mixed|null
-     * @throws RuntimeException
      */
     public function getUserByLoginPassword($login, $password)
     {
