@@ -5,7 +5,7 @@ namespace Framework\Core;
 
 interface IController
 {
-    public function renderView(string $viewName, $variables = null, string $content_type = null, bool $returnOnlyContent = false, int $status = 200);
+    public function renderView(string $viewName, array $variables = [], string $content_type = null, bool $returnOnlyContent = false, int $status = 200);
 
     public function isAuth();
 

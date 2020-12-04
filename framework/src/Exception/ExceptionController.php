@@ -10,6 +10,6 @@ class ExceptionController extends Controller
 {
     public function render(\Exception $exception)
     {
-        return $this->renderView("exception", $exception->getMessage(), null, false, 500);
+        return $this->renderView("exception", ["message" => $exception->getMessage()], null, false, 500);
     }
 }

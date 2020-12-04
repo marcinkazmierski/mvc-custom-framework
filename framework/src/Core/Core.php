@@ -15,6 +15,7 @@ class Core
 
     public static function init()
     {
+        //todo: refactor Profiler
         Profiler::getInstance()->start('Core:init');
         ini_set("log_errors", (string)(int)Profiler::getInstance()->isEnabled()); //TODO: value object
         ini_set('display_errors', (string)(int)Profiler::getInstance()->isEnabled()); //TODO: value object
@@ -100,10 +101,10 @@ class Core
 
     /**
      * @param string $view
-     * @param null $data @todo: as array
+     * @param array $data
      * @return string
      */
-    private static function load(string $view, $data = null)
+    private static function load(string $view, array $data = [])
     {
         extract(array("content" => $data));
         ob_start();
@@ -114,11 +115,11 @@ class Core
 
     /**
      * @param string $view
-     * @param null $data @todo: as array
+     * @param array $data
      * @param bool $returnOnlyContent
      * @return string
      */
-    public static function loadView(string $view, $data = null, bool $returnOnlyContent = false)
+    public static function loadView(string $view, array $data = [], bool $returnOnlyContent = false)
     {
         if ($returnOnlyContent) {
             return self::load($view, $data);

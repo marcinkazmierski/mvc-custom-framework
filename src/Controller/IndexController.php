@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-
 use App\Model\UserModel;
 use Framework\Core\Controller;
 use Framework\Core\Core;
 use Framework\Exception\AccessDeniedException;
+use Framework\Exception\RuntimeException;
 use Framework\Response\Response;
 
 class IndexController extends Controller
@@ -35,10 +35,10 @@ class IndexController extends Controller
             $users = $this->userModel->getAll();
             $this->getCache()->setCache('users', $users, 10);
         }
-        $params = array(
+        $params = [
             'users' => $users,
             'auth' => $this->isAuth()
-        );
+        ];
         return $this->renderView("index", $params);
     }
 
@@ -62,7 +62,7 @@ class IndexController extends Controller
             ];
         }
 
-        return $this->renderView("json", json_encode($usersJson), 'application/json', true);
+        return $this->renderView("json", ['json' => json_encode($usersJson)], 'application/json', true);
     }
 
     /**
@@ -75,7 +75,7 @@ class IndexController extends Controller
         if (!$this->isAuth()) {
             Core::redirect("/index.php/index/login");
         }
-        return $this->renderView("user", $user);
+        return $this->renderView("user", ['user' => $user]);
     }
 
     /**
@@ -112,6 +112,7 @@ class IndexController extends Controller
     /**
      * @return Response
      * @throws AccessDeniedException
+     * @throws RuntimeException
      */
     public function insertAction()
     {

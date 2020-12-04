@@ -59,13 +59,13 @@ abstract class Controller implements IController
 
     /**
      * @param string $viewName
-     * @param null $variables @todo: as array
+     * @param array $variables
      * @param string|null $content_type
      * @param bool $returnOnlyContent
      * @param int $status
      * @return Response
      */
-    public function renderView(string $viewName, $variables = null, string $content_type = null, bool $returnOnlyContent = false, int $status = 200)
+    public function renderView(string $viewName, array $variables = [], string $content_type = null, bool $returnOnlyContent = false, int $status = 200)
     {
         $body = Core::loadView($viewName, $variables, $returnOnlyContent);
         return new Response($body, $status, $content_type);

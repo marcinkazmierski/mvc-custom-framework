@@ -1,3 +1,3 @@
 <p>
-    <?php print $content; ?>
+    <?php print $content['message'] ?? ''; ?>
 </p>
