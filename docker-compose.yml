@@ -11,7 +11,7 @@ services:
     links:
       - mysql:mysql
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     volumes:
       - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
       - ./docker/mysql/data:/var/lib/mysql

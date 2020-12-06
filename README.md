@@ -35,6 +35,8 @@ User: test / test
 - `docker-compose exec app bash`
 
 ### What implemented? 
+- PHP: 7.3
+- MySQL: 8.0
 - MVC Architecture
 - __autoload
 - namespaces
@@ -48,13 +50,13 @@ User: test / test
 - Exceptions
 - docker-compose
 - composer + vendors
+- simple DI 
+- password manager - PASSWORD_BCRYPT
 
 ### TODO 
 - update bootstrap ver
 - translations
 - PHP7.3
-- password hash provider
-- simple DI 
 
 ###PHPUnit
 - Tests run in docker: vendor/bin/phpunit framework/tests/
