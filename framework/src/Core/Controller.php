@@ -6,6 +6,7 @@ namespace Framework\Core;
 
 use Framework\Core\DependencyInjection\Container;
 use Framework\Exception\NotFoundException;
+use Framework\Exception\RuntimeException;
 use Framework\Response\Response;
 use Framework\Service\Auth\Auth;
 use Framework\Service\Cache\Cache;
@@ -29,6 +30,7 @@ abstract class Controller implements IController
 
     /**
      * @return Cache
+     * @throws RuntimeException
      */
     public function getCache(): Cache
     {
@@ -39,6 +41,7 @@ abstract class Controller implements IController
 
     /**
      * @return Auth
+     * @throws RuntimeException
      */
     public function getAuth(): Auth
     {
@@ -73,6 +76,7 @@ abstract class Controller implements IController
 
     /**
      * @return bool
+     * @throws RuntimeException
      */
     public function isAuth()
     {
@@ -80,14 +84,18 @@ abstract class Controller implements IController
     }
 
     /**
-     * @param $login
+     * @param string $login
      * @return bool
+     * @throws RuntimeException
      */
     public function setAuth($login)
     {
         return $this->getAuth()->setAuth($login);
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function destroyAuth()
     {
         $this->getAuth()->destroyAuth();

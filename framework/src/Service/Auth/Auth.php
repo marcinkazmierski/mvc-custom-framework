@@ -5,24 +5,38 @@ namespace Framework\Service\Auth;
 
 class Auth
 {
-    public function setAuth($login)
+    const FIELD_USER_LOGIN = 'auth_user_login';
+    const FIELD_IS_AUTHENTICATED = 'auth_authenticated';
+
+    /**
+     * @param string $login
+     * @return bool
+     */
+    public function setAuth(string $login): bool
     {
-        $_SESSION['auth_user_login'] = $login;
-        $_SESSION['auth_authenticated'] = true;
+        $_SESSION[self::FIELD_USER_LOGIN] = $login;
+        $_SESSION[self::FIELD_IS_AUTHENTICATED] = true;
         return true;
     }
 
-    public function isAuth()
+    /**
+     * @return bool
+     */
+    public function isAuth(): bool
     {
-        if (isset($_SESSION['auth_authenticated']) && $_SESSION['auth_authenticated'] === true) {
+        if (isset($_SESSION[self::FIELD_IS_AUTHENTICATED]) && $_SESSION[self::FIELD_IS_AUTHENTICATED] === true) {
             return true;
         }
         return false;
     }
 
-    public function destroyAuth()
+    /**
+     * @return bool
+     */
+    public function destroyAuth(): bool
     {
-        $_SESSION['auth_authenticated'] = array();
+        $_SESSION[self::FIELD_IS_AUTHENTICATED] = false;
         @session_destroy();
+        return true;
     }
 }
