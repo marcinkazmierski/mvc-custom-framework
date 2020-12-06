@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Framework\Core\DependencyInjection;
 
+use Framework\Exception\RuntimeException;
+
 interface ContainerInterface
 {
     /**
@@ -12,8 +14,9 @@ interface ContainerInterface
     public function set(string $id, object $service): void;
 
     /**
-     * @param string $id
-     * @return object|null
+     * @param string $className
+     * @return object
+     * @throws RuntimeException
      */
-    public function get(string $id): ?object;
+    public function get(string $className): object;
 }

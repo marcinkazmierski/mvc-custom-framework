@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Framework\Core;
 
-
-use Framework\Core\DependencyInjection\Container;
+use Framework\Core\DependencyInjection\ContainerInterface;
 use Framework\Exception\NotFoundException;
 use Framework\Exception\RuntimeException;
 use Framework\Response\Response;
@@ -17,13 +16,13 @@ use Framework\Service\Cache\Cache;
  */
 abstract class Controller implements IController
 {
-    /** @var Container */
+    /** @var ContainerInterface */
     private $container;
 
     /**
-     * @param Container $container
+     * @param ContainerInterface $container
      */
-    public function setContainer(Container $container): void
+    public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
     }
@@ -88,7 +87,7 @@ abstract class Controller implements IController
      * @return bool
      * @throws RuntimeException
      */
-    public function setAuth($login)
+    public function setAuth(string $login)
     {
         return $this->getAuth()->setAuth($login);
     }

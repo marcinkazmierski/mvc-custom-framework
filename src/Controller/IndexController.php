@@ -26,6 +26,7 @@ class IndexController extends Controller
 
     /**
      * @return Response
+     * @throws RuntimeException
      */
     public function indexAction()
     {
@@ -44,6 +45,7 @@ class IndexController extends Controller
 
     /**
      * @return Response
+     * @throws RuntimeException
      */
     public function jsonAction()
     {
@@ -68,6 +70,7 @@ class IndexController extends Controller
     /**
      * @param $id
      * @return Response
+     * @throws RuntimeException
      */
     public function userAction($id)
     {
@@ -80,6 +83,7 @@ class IndexController extends Controller
 
     /**
      * @return Response
+     * @throws RuntimeException
      */
     public function loginAction()
     {
@@ -102,6 +106,7 @@ class IndexController extends Controller
 
     /**
      * @return Response
+     * @throws RuntimeException
      */
     public function logoutAction()
     {
@@ -120,6 +125,7 @@ class IndexController extends Controller
             throw new AccessDeniedException();
         }
 
+        //todo: validate
         if (isset($_POST['login']) && isset($_POST['password'])) {
             $id = $this->userModel->addUser($_POST['login'], $_POST['password']);
             $this->getCache()->dropByKey('users');

@@ -18,17 +18,13 @@ class Core
 
     /**
      * Core constructor.
+     * @param string $environment
      * @param ContainerInterface $container
-     * @throws \Exception
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(string $environment, ContainerInterface $container)
     {
+        $this->environment = $environment;
         $this->container = $container;
-
-        $this->environment = Config::getOption('environment');
-        if (empty($this->environment)) {
-            $this->environment = 'prod';
-        }
     }
 
     public function init()
@@ -141,11 +137,10 @@ class Core
         $controller = 'App\\Controller\\' . $controller;
 
         if (class_exists($controller)) {
-
-            $container = new Container();
-            /** @var Controller $c */
-            $c = $container->get($controller);
-            $c->setContainer($container);
+            $c = $this->container->get($controller);
+            if ($c instanceof Controller) {
+                $c->setContainer($this->container);
+            }
             print call_user_func_array(array($c, $function), array($param));
         } else {
             throw new \Exception(t('Controller class not found.'));
