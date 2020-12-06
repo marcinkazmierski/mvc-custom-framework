@@ -4,29 +4,82 @@ declare(strict_types=1);
 namespace Framework\Core;
 
 use Framework\Core\DependencyInjection\Container;
+use Framework\Core\DependencyInjection\ContainerInterface;
 use Framework\Exception\ExceptionController;
-use Framework\Service\Profiler\Profiler;
+use Framework\Service\Profiler\ProfilerInterface;
 
 class Core
 {
-    private function __construct()
+    /** @var ContainerInterface */
+    protected $container;
+
+    /** @var string */
+    protected $environment = 'prod';
+
+    /**
+     * Core constructor.
+     * @param ContainerInterface $container
+     * @throws \Exception
+     */
+    public function __construct(ContainerInterface $container)
     {
+        $this->container = $container;
+
+        $this->environment = Config::getOption('environment');
+        if (empty($this->environment)) {
+            $this->environment = 'prod';
+        }
     }
 
-    public static function init()
+    public function init()
     {
-        //todo: refactor Profiler
-        Profiler::getInstance()->start('Core:init');
-        ini_set("log_errors", (string)(int)Profiler::getInstance()->isEnabled()); //TODO: value object
-        ini_set('display_errors', (string)(int)Profiler::getInstance()->isEnabled()); //TODO: value object
         ini_set("error_log", "logs/errors.log");
-        self::startDispatcher();
-        Profiler::getInstance()->end('Core:init');
+        ini_set("log_errors", "1");
 
-        print Profiler::getInstance()->getAllStats();
+        switch ($this->environment) {
+            case 'dev':
+                ini_set('display_errors', "1");
+                /** @var ProfilerInterface $profiler */
+                $profiler = $this->container->get(ProfilerInterface::class);
+                $profiler->start('Core:init');
+                break;
+            case 'test':
+                ini_set('display_errors', "1");
+                break;
+            case 'prod':
+                ini_set('display_errors', "0");
+                break;
+        }
+
+        $this->startDispatcher();
+
+        switch ($this->environment) {
+            case 'dev':
+                /** @var ProfilerInterface $profiler */
+                $profiler = $this->container->get(ProfilerInterface::class);
+                $profiler->end('Core:init');
+
+                $render = true;
+                $headers = headers_list();
+                foreach ($headers as $header) {
+                    if (stripos($header, "Content-type: application/json") !== false) {
+                        $render = false;
+                    }
+                }
+                if ($render) {
+                    print $profiler->render();
+                }
+                break;
+            case 'test':
+                //todo test
+                break;
+            case 'prod':
+                // todo: prod
+                break;
+        }
     }
 
-    private static function startDispatcher()
+    protected function startDispatcher()
     {
         $controller = '';
         $action = '';
@@ -43,7 +96,7 @@ class Core
         }
 
         try {
-            Core::useController($controller, $action, $param);
+            $this->useController($controller, $action, $param);
         } catch (\Exception $e) {
             $exception = new ExceptionController();
             print $exception->render($e);
@@ -70,7 +123,7 @@ class Core
      * @param bool $param
      * @throws \Exception
      */
-    public static function useController(string $controller = '', string $action = '', $param = false)
+    public function useController(string $controller = '', string $action = '', $param = false)
     {
         if (!$controller) {
             $controller = 'index';

@@ -5,83 +5,44 @@ namespace Framework\Service\Profiler;
 
 use Framework\Core\Config;
 
-class Profiler implements IProfiler
+class Profiler implements ProfilerInterface
 {
-    private $data;
-    private $environment;
+    const FIELD_START = 'start';
+    const FIELD_END = 'end';
+    const FIELD_DIFF = 'diff';
 
-    private static $instance = null;
+    protected $data = [];
 
     /**
-     * Profiler constructor.
-     * @throws \Exception
+     * @param string $key
      */
-    private function __construct()
+    public function start(string $key): void
     {
-        $this->environment = Config::getOption('environment');
-        if (empty($this->environment)) {
-            $this->environment = 'prod';
-        }
-        $this->data = array();
+        $this->data[$key] = [
+            self::FIELD_START => microtime(true)
+        ];
     }
 
-    public static function getInstance()
+    /**
+     * @param string $key
+     */
+    public function end(string $key): void
     {
-        if (self::$instance == null) {
-            self::$instance = new Profiler();
-        }
-        return self::$instance;
+        $this->data[$key][self::FIELD_END] = microtime(true);
+        // diff:
+        $this->data[$key][self::FIELD_DIFF] = $this->data[$key][self::FIELD_END] - $this->data[$key][self::FIELD_START] ?? 0;
     }
 
-    public function isEnabled()
+    /**
+     * @return string
+     */
+    public function render(): string
     {
-        if ($this->environment === 'dev') {
-            $headers = headers_list();
-            foreach ($headers as $header) {
-                if (stripos($header, "Content-type: application/json") !== false) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    public function start($name)
-    {
-        if (!$this->isEnabled()) {
-            return false;
-        }
-        $this->data[$name] = array(
-            'start' => microtime(true)
-        );
-        return true;
-    }
-
-    public function end($name)
-    {
-        if (!$this->isEnabled()) {
-            return false;
-        }
-
-        if (empty($this->data[$name]['start'])) {
-            $this->start($name);
-        }
-        $this->data[$name]['end'] = microtime(true);
-        // seconds
-        $this->data[$name]['diff'] = $this->data[$name]['end'] - $this->data[$name]['start'];
-        return true;
-    }
-
-    public function getAllStats()
-    {
-        if (!$this->isEnabled()) {
-            return false;
-        }
+        // todo: template
         $html = '<div class="profiler-wrapper">';
         foreach ($this->data as $name => $data) {
             $html .= '<p>';
-            $html .= '[' . $name . '] time exec: ' . ($data['diff'] * 1000) . ' ms'; //TODO: log into file?
+            $html .= '[' . $name . '] time exec: ' . ($data[self::FIELD_DIFF] * 1000) . ' ms'; //TODO: log into file
             $html .= '</p>';
         }
         $html .= '</div>';
