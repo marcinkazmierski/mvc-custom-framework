@@ -9,19 +9,25 @@ use Framework\Core\Core;
 use Framework\Exception\AccessDeniedException;
 use Framework\Exception\RuntimeException;
 use Framework\Response\Response;
+use Framework\Service\Logger\LoggerInterface;
 
 class IndexController extends Controller
 {
     /** @var UserModel */
     protected $userModel;
 
+    /** @var LoggerInterface */
+    protected $logger;
+
     /**
      * IndexController constructor.
      * @param UserModel $userModel
+     * @param LoggerInterface $logger
      */
-    public function __construct(UserModel $userModel)
+    public function __construct(UserModel $userModel, LoggerInterface $logger)
     {
         $this->userModel = $userModel;
+        $this->logger = $logger;
     }
 
     /**
@@ -100,6 +106,7 @@ class IndexController extends Controller
                 Core::redirect("/index.php/index/index");
             }
             set_flash_message(t('Invalid login data'));
+            $this->logger->error("Invalid login data", ['login' => $_POST['login']]);
         }
         return $this->renderView("login");
     }

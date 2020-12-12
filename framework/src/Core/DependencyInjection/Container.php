@@ -6,6 +6,8 @@ namespace Framework\Core\DependencyInjection;
 use Framework\Exception\RuntimeException;
 use Framework\Security\PasswordManager;
 use Framework\Security\PasswordManagerInterface;
+use Framework\Service\Logger\BasicLogger;
+use Framework\Service\Logger\LoggerInterface;
 
 class Container implements ContainerInterface
 {
@@ -20,6 +22,7 @@ class Container implements ContainerInterface
     {
         // custom DI:
         $this->services[PasswordManagerInterface::class] = $this->get(PasswordManager::class);
+        $this->services[LoggerInterface::class] = $this->get(BasicLogger::class);
     }
 
     /**

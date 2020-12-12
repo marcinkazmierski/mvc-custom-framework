@@ -19,12 +19,39 @@ abstract class Controller implements IController
     /** @var ContainerInterface */
     private $container;
 
+    /** @var string */
+    private $environment;
+
     /**
      * @param ContainerInterface $container
      */
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
+    }
+
+    /**
+     * @return ContainerInterface
+     */
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvironment(): string
+    {
+        return $this->environment;
+    }
+
+    /**
+     * @param string $environment
+     */
+    public function setEnvironment(string $environment): void
+    {
+        $this->environment = $environment;
     }
 
     /**

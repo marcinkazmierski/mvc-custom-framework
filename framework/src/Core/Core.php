@@ -3,15 +3,18 @@ declare(strict_types=1);
 
 namespace Framework\Core;
 
-use Framework\Core\DependencyInjection\Container;
 use Framework\Core\DependencyInjection\ContainerInterface;
 use Framework\Exception\ExceptionController;
+use Framework\Service\Logger\LoggerInterface;
 use Framework\Service\Profiler\ProfilerInterface;
 
 class Core
 {
     /** @var ContainerInterface */
     protected $container;
+
+    /** @var LoggerInterface */
+    protected $logger;
 
     /** @var string */
     protected $environment = 'prod';
@@ -20,11 +23,13 @@ class Core
      * Core constructor.
      * @param string $environment
      * @param ContainerInterface $container
+     * @throws \Framework\Exception\RuntimeException
      */
     public function __construct(string $environment, ContainerInterface $container)
     {
         $this->environment = $environment;
         $this->container = $container;
+        $this->logger = $this->container->get(LoggerInterface::class);
     }
 
     public function init()
@@ -93,10 +98,12 @@ class Core
 
         try {
             $this->useController($controller, $action, $param);
-        } catch (\Exception $e) {
-            $exception = new ExceptionController();
-            print $exception->render($e);
-            error_log(t('Fatal Error: ' . $e->getMessage()));
+        } catch (\Throwable $e) {
+            $exceptionController = new ExceptionController();
+            $exceptionController->setContainer($this->container);
+            $exceptionController->setEnvironment($this->environment);
+            print $exceptionController->render($e);
+            $this->logger->critical('Fatal Error: ' . $e->getMessage(), $e->getTrace());
         }
     }
 
@@ -140,6 +147,7 @@ class Core
             $c = $this->container->get($controller);
             if ($c instanceof Controller) {
                 $c->setContainer($this->container);
+                $c->setEnvironment($this->environment);
             }
             print call_user_func_array(array($c, $function), array($param));
         } else {
