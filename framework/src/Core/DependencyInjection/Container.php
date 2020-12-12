@@ -3,10 +3,27 @@ declare(strict_types=1);
 
 namespace Framework\Core\DependencyInjection;
 
+use Framework\Exception\RuntimeException;
+use Framework\Security\PasswordManager;
+use Framework\Security\PasswordManagerInterface;
+use Framework\Service\Logger\BasicLogger;
+use Framework\Service\Logger\LoggerInterface;
+
 class Container implements ContainerInterface
 {
     /** @var array */
     protected $services = [];
+
+    /**
+     * Container constructor.
+     * @throws RuntimeException
+     */
+    public function __construct()
+    {
+        // custom DI:
+        $this->services[PasswordManagerInterface::class] = $this->get(PasswordManager::class);
+        $this->services[LoggerInterface::class] = $this->get(BasicLogger::class);
+    }
 
     /**
      * @param string $id
@@ -19,9 +36,10 @@ class Container implements ContainerInterface
 
     /**
      * @param string $class_name
-     * @return object|null
+     * @return object
+     * @throws RuntimeException
      */
-    public function get(string $class_name): ?object
+    public function get(string $class_name): object
     {
         if (isset($this->services[$class_name])) {
             return $this->services[$class_name];
@@ -48,10 +66,17 @@ class Container implements ContainerInterface
                     $this->set($class_name, $instance);
                     return $instance;
                 }
+            } elseif ($reflector->isInterface()) {
+                $class_name_impl = preg_replace('/Interface$/', '', $class_name);
+                if (class_exists($class_name_impl)) {
+                    return $this->get($class_name_impl);
+                } else {
+                    throw new RuntimeException("Interface implementation {$class_name} is not exist in container.");
+                }
             }
         } catch (\Throwable $exception) {
+            throw new RuntimeException($exception->getMessage());
         }
-        // throw new RuntimeException("Class or service {$class_name} is not exist in container");
-        return null;
+        throw new RuntimeException("Class or service {$class_name} is not exist in container.");
     }
 }

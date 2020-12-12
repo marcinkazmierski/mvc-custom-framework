@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `mvc_db`.`users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login` text CHARACTER SET utf8 NOT NULL,
-  `password` text CHARACTER SET utf8 NOT NULL,
+  `login` varchar(64) NOT NULL,
+  `password` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -20,4 +20,4 @@ CREATE TABLE IF NOT EXISTS `mvc_db`.`caches` (
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO `mvc_db`.`users` (`id`, `login`, `password`) VALUES (NULL, 'test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08');
+INSERT INTO `mvc_db`.`users` (`id`, `login`, `password`) VALUES (NULL, 'test', '$2y$10$80vnzmwqfDQTuv5unhZctOzZhaMPkqgbFtDalrub6ZmGXNAQ9f5ae');

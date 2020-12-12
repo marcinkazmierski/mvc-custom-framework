@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Framework\Core;
 
-
-use Framework\Core\DependencyInjection\Container;
+use Framework\Core\DependencyInjection\ContainerInterface;
 use Framework\Exception\NotFoundException;
+use Framework\Exception\RuntimeException;
 use Framework\Response\Response;
 use Framework\Service\Auth\Auth;
 use Framework\Service\Cache\Cache;
@@ -16,19 +16,47 @@ use Framework\Service\Cache\Cache;
  */
 abstract class Controller implements IController
 {
-    /** @var Container */
+    /** @var ContainerInterface */
     private $container;
 
+    /** @var string */
+    private $environment;
+
     /**
-     * @param Container $container
+     * @param ContainerInterface $container
      */
-    public function setContainer(Container $container): void
+    public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
     }
 
     /**
+     * @return ContainerInterface
+     */
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvironment(): string
+    {
+        return $this->environment;
+    }
+
+    /**
+     * @param string $environment
+     */
+    public function setEnvironment(string $environment): void
+    {
+        $this->environment = $environment;
+    }
+
+    /**
      * @return Cache
+     * @throws RuntimeException
      */
     public function getCache(): Cache
     {
@@ -39,6 +67,7 @@ abstract class Controller implements IController
 
     /**
      * @return Auth
+     * @throws RuntimeException
      */
     public function getAuth(): Auth
     {
@@ -59,13 +88,13 @@ abstract class Controller implements IController
 
     /**
      * @param string $viewName
-     * @param null $variables @todo: as array
+     * @param array $variables
      * @param string|null $content_type
      * @param bool $returnOnlyContent
      * @param int $status
      * @return Response
      */
-    public function renderView(string $viewName, $variables = null, string $content_type = null, bool $returnOnlyContent = false, int $status = 200)
+    public function renderView(string $viewName, array $variables = [], string $content_type = null, bool $returnOnlyContent = false, int $status = 200)
     {
         $body = Core::loadView($viewName, $variables, $returnOnlyContent);
         return new Response($body, $status, $content_type);
@@ -73,6 +102,7 @@ abstract class Controller implements IController
 
     /**
      * @return bool
+     * @throws RuntimeException
      */
     public function isAuth()
     {
@@ -80,14 +110,18 @@ abstract class Controller implements IController
     }
 
     /**
-     * @param $login
+     * @param string $login
      * @return bool
+     * @throws RuntimeException
      */
-    public function setAuth($login)
+    public function setAuth(string $login)
     {
         return $this->getAuth()->setAuth($login);
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function destroyAuth()
     {
         $this->getAuth()->destroyAuth();

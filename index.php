@@ -1,7 +1,17 @@
 <?php
 declare(strict_types=1);
 
+use Framework\Core\Config;
+use Framework\Core\Core;
+use Framework\Core\DependencyInjection\Container;
+
 define('APP_ROOT', getcwd());
 require_once APP_ROOT . '/framework/bootstrap.php';
 
-\Framework\Core\Core::init(); // init function
+$environment = (string)Config::getOption('environment');
+if (empty($environment)) {
+    $environment = 'prod';
+}
+$container = new Container();
+$core = new Core($environment, $container);
+$core->init(); // init function

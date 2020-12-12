@@ -3,29 +3,84 @@ declare(strict_types=1);
 
 namespace Framework\Core;
 
-use Framework\Core\DependencyInjection\Container;
+use Framework\Core\DependencyInjection\ContainerInterface;
 use Framework\Exception\ExceptionController;
-use Framework\Service\Profiler\Profiler;
+use Framework\Service\Logger\LoggerInterface;
+use Framework\Service\Profiler\ProfilerInterface;
 
 class Core
 {
-    private function __construct()
+    /** @var ContainerInterface */
+    protected $container;
+
+    /** @var LoggerInterface */
+    protected $logger;
+
+    /** @var string */
+    protected $environment = 'prod';
+
+    /**
+     * Core constructor.
+     * @param string $environment
+     * @param ContainerInterface $container
+     * @throws \Framework\Exception\RuntimeException
+     */
+    public function __construct(string $environment, ContainerInterface $container)
     {
+        $this->environment = $environment;
+        $this->container = $container;
+        $this->logger = $this->container->get(LoggerInterface::class);
     }
 
-    public static function init()
+    public function init()
     {
-        Profiler::getInstance()->start('Core:init');
-        ini_set("log_errors", (string)(int)Profiler::getInstance()->isEnabled()); //TODO: value object
-        ini_set('display_errors', (string)(int)Profiler::getInstance()->isEnabled()); //TODO: value object
         ini_set("error_log", "logs/errors.log");
-        self::startDispatcher();
-        Profiler::getInstance()->end('Core:init');
+        ini_set("log_errors", "1");
 
-        print Profiler::getInstance()->getAllStats();
+        switch ($this->environment) {
+            case 'dev':
+                ini_set('display_errors', "1");
+                /** @var ProfilerInterface $profiler */
+                $profiler = $this->container->get(ProfilerInterface::class);
+                $profiler->start('Core:init');
+                break;
+            case 'test':
+                ini_set('display_errors', "1");
+                break;
+            case 'prod':
+                ini_set('display_errors', "0");
+                break;
+        }
+
+        $this->startDispatcher();
+
+        switch ($this->environment) {
+            case 'dev':
+                /** @var ProfilerInterface $profiler */
+                $profiler = $this->container->get(ProfilerInterface::class);
+                $profiler->end('Core:init');
+
+                $render = true;
+                $headers = headers_list();
+                foreach ($headers as $header) {
+                    if (stripos($header, "Content-type: application/json") !== false) {
+                        $render = false;
+                    }
+                }
+                if ($render) {
+                    print $profiler->render();
+                }
+                break;
+            case 'test':
+                //todo test
+                break;
+            case 'prod':
+                // todo: prod
+                break;
+        }
     }
 
-    private static function startDispatcher()
+    protected function startDispatcher()
     {
         $controller = '';
         $action = '';
@@ -42,11 +97,13 @@ class Core
         }
 
         try {
-            Core::useController($controller, $action, $param);
-        } catch (\Exception $e) {
-            $exception = new ExceptionController();
-            print $exception->render($e);
-            error_log(t('Fatal Error: ' . $e->getMessage()));
+            $this->useController($controller, $action, $param);
+        } catch (\Throwable $e) {
+            $exceptionController = new ExceptionController();
+            $exceptionController->setContainer($this->container);
+            $exceptionController->setEnvironment($this->environment);
+            print $exceptionController->render($e);
+            $this->logger->critical('Fatal Error: ' . $e->getMessage(), $e->getTrace());
         }
     }
 
@@ -69,7 +126,7 @@ class Core
      * @param bool $param
      * @throws \Exception
      */
-    public static function useController(string $controller = '', string $action = '', $param = false)
+    public function useController(string $controller = '', string $action = '', $param = false)
     {
         if (!$controller) {
             $controller = 'index';
@@ -87,11 +144,11 @@ class Core
         $controller = 'App\\Controller\\' . $controller;
 
         if (class_exists($controller)) {
-
-            $container = new Container();
-            /** @var Controller $c */
-            $c = $container->get($controller);
-            $c->setContainer($container);
+            $c = $this->container->get($controller);
+            if ($c instanceof Controller) {
+                $c->setContainer($this->container);
+                $c->setEnvironment($this->environment);
+            }
             print call_user_func_array(array($c, $function), array($param));
         } else {
             throw new \Exception(t('Controller class not found.'));
@@ -100,10 +157,10 @@ class Core
 
     /**
      * @param string $view
-     * @param null $data @todo: as array
+     * @param array $data
      * @return string
      */
-    private static function load(string $view, $data = null)
+    private static function load(string $view, array $data = [])
     {
         extract(array("content" => $data));
         ob_start();
@@ -114,11 +171,11 @@ class Core
 
     /**
      * @param string $view
-     * @param null $data @todo: as array
+     * @param array $data
      * @param bool $returnOnlyContent
      * @return string
      */
-    public static function loadView(string $view, $data = null, bool $returnOnlyContent = false)
+    public static function loadView(string $view, array $data = [], bool $returnOnlyContent = false)
     {
         if ($returnOnlyContent) {
             return self::load($view, $data);

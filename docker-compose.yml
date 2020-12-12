@@ -11,10 +11,11 @@ services:
     links:
       - mysql:mysql
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     volumes:
-    - ./docker/mysql/data:/var/lib/mysql
-    - ./docker/mysql/mysql-dump:/docker-entrypoint-initdb.d
+      - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/mysql-dump:/docker-entrypoint-initdb.d
     ports:
       - "9906:3306"
     environment:
