@@ -1,10 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 spl_autoload_register('MVCAutoLoader');
 function MVCAutoLoader($class_name)
 {
-    $className =  \Framework\Core\Core::dirNameFilter($class_name);
+    $className = \Framework\Core\Core::dirNameFilter($class_name);
 
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
     $fileClass = FRAMEWORK_SRC_PATH . $class;
@@ -31,7 +31,23 @@ function MVCAutoLoader($class_name)
  */
 function t($string)
 {
-    // TODO: add translate function
+    // TODO: movo to service and use DI!
+    $language = 'en'; //todo
+    static $allTranslations = [];
+
+    if (!isset($allTranslations[$language])) {
+        $allTranslations[$language] = [];
+        $file = APP_ROOT . sprintf('/lang/%s.php', $language);
+        if (file_exists($file)) {
+            include $file;
+            if (isset($translations) && is_array($translations)) {
+                $allTranslations[$language] = $translations;
+            }
+        }
+    }
+
+    $string = $allTranslations[$language][$string] ?? $string;
+
     return htmlspecialchars($string);
 }
 

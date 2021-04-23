@@ -1,9 +1,12 @@
 <section>
+    <h1>
+        <?php print t('hello'); ?>
+    </h1>
     <h2>
         <?php if (isset($content['auth']) && $content['auth'] === true): ?>
-            You are logged
+            <?php print t('You are logged'); ?>
         <?php else: ?>
-            You are not logged
+            <?php print t('You are not logged'); ?>
         <?php endif; ?>
     </h2>
 </section>
