@@ -13,6 +13,7 @@ class ExceptionControllerTest extends TestCase
     public function testRender()
     {
         $controller = new ExceptionController();
+
         ob_start();
         $response = $controller->render(new \Exception("Error test"));
         print $response;

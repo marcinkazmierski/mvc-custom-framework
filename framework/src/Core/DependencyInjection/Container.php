@@ -35,48 +35,48 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param string $class_name
+     * @param string $className
      * @return object
      * @throws RuntimeException
      */
-    public function get(string $class_name): object
+    public function get(string $className): object
     {
-        if (isset($this->services[$class_name])) {
-            return $this->services[$class_name];
+        if (isset($this->services[$className])) {
+            return $this->services[$className];
         }
 
         try {
-            $reflector = new \ReflectionClass($class_name);
+            $reflector = new \ReflectionClass($className);
             if ($reflector->isInstantiable()) {
                 // get class constructor
                 $constructor = $reflector->getConstructor();
                 if (is_null($constructor)) {
                     // get new instance from class
                     $instance = $reflector->newInstance();
-                    $this->set($class_name, $instance);
+                    $this->set($className, $instance);
                     return $instance;
                 } else {
                     $parameters = $constructor->getParameters();
                     $dependencies = [];
                     foreach ($parameters as $parameter) {
-                        $dependency = $parameter->getClass();
-                        $dependencies[] = $this->get($dependency->name);
+                        $dependency = $parameter->getType();
+                        $dependencies[] = $this->get($dependency->getName());
                     }
                     $instance = $reflector->newInstanceArgs($dependencies);
-                    $this->set($class_name, $instance);
+                    $this->set($className, $instance);
                     return $instance;
                 }
             } elseif ($reflector->isInterface()) {
-                $class_name_impl = preg_replace('/Interface$/', '', $class_name);
+                $class_name_impl = preg_replace('/Interface$/', '', $className);
                 if (class_exists($class_name_impl)) {
                     return $this->get($class_name_impl);
                 } else {
-                    throw new RuntimeException("Interface implementation {$class_name} is not exist in container.");
+                    throw new RuntimeException("Interface implementation {$className} is not exist in container.");
                 }
             }
         } catch (\Throwable $exception) {
             throw new RuntimeException($exception->getMessage());
         }
-        throw new RuntimeException("Class or service {$class_name} is not exist in container.");
+        throw new RuntimeException("Class or service {$className} is not exist in container.");
     }
 }

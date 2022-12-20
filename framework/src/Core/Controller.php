@@ -20,7 +20,7 @@ abstract class Controller implements IController
     private $container;
 
     /** @var string */
-    private $environment;
+    private $environment = 'prod';
 
     /**
      * @param ContainerInterface $container

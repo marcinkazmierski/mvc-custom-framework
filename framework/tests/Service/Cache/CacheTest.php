@@ -9,7 +9,7 @@ class CacheTest extends TestCase
     /** @var $cache Cache */
     protected $cache;
 
-    public function setUp()
+    public function setUp():void
     {
         $this->cache = new Cache();
         $this->cache->dropAllCache();
@@ -44,7 +44,7 @@ class CacheTest extends TestCase
         $this->assertEmpty($cache);
     }
 
-    public function tearDown()
+    public function tearDown():void
     {
         $this->cache->dropAllCache();
     }
